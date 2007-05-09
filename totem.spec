@@ -12,9 +12,11 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.18.1
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
+# (fc) 2.18.1-2mdv fix xine based browser plugin (Mdk bug #29513)
+Patch0: totem-2.18.1-fixxinebrowserplugin.patch
 License: GPL
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -130,6 +132,7 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
+%patch0 -p1 -b .fixxinebrowserplugin
 
 %build
 
