@@ -1,4 +1,4 @@
-%define major 1
+%define major 7
 %define lib_name %mklibname totem-plparser %major
 %define build_gstreamer 1
 %define build_xine 1
@@ -11,7 +11,7 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.18.2
+Version: 2.19.4
 Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
@@ -26,6 +26,7 @@ BuildRequires: libgstreamer-plugins-base-devel >= %gstver
 BuildRequires: gstreamer0.10-plugins-good
 BuildRequires: gstreamer0.10-plugins-base
 %endif
+BuildRequires: libxdmcp-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxxf86vm-devel
 BuildRequires: libxine-devel >= %xineversion
@@ -34,6 +35,7 @@ BuildRequires: scrollkeeper
 BuildRequires: gnome-doc-utils
 BuildRequires: liblirc-devel
 BuildRequires: libnautilus-devel
+BuildRequires: libgalago-devel
 BuildRequires: hal-devel
 BuildRequires: glib2-devel >= 2.9.6
 BuildRequires: iso-codes
@@ -260,7 +262,7 @@ install -D -m 644 %{SOURCE1} %buildroot/%_liconsdir/%name.png
 
 
 # remove unpackaged files
-rm -rf $RPM_BUILD_ROOT%{_libdir}/{mozilla/plugins,nautilus/extensions-1.0}/*.{la,a} %buildroot/var/lib/scrollkeeper
+rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-1.0}/*.{la,a} %buildroot/var/lib/scrollkeeper 
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -340,12 +342,13 @@ fi
 %_sysconfdir/gconf/schemas/totem.schemas
 %_sysconfdir/gconf/schemas/totem-handlers.schemas
 %_sysconfdir/gconf/schemas/totem-video-thumbnail.schemas
-%_datadir/pixmaps/*
 %dir %_datadir/omf/totem/
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/omf/totem/totem-C.omf
 %_datadir/totem
 %_datadir/applications/totem.desktop
+%dir %_libdir/totem
+%_libdir/totem/plugins
 %if %build_mozilla
 %_libdir/mozilla/plugins/*.xpt
 %endif
