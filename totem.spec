@@ -15,8 +15,6 @@ Version: 2.19.4
 Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
-# (fc) 2.18.1-2mdv downgrade requirement on xine-lib, we have a fixed 1.1.6 release (Mdk bug #29513)
-Patch0: totem-2.18.2-xinebrowser.patch
 License: GPL
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -134,10 +132,6 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
-%patch0 -p1 -b .xinebrowser
-
-#needed by patch0
-autoconf
 
 %build
 
