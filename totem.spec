@@ -12,7 +12,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.19.4
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 # (fc) 2.18.1-2mdv downgrade requirement on xine-lib, we have a fixed 1.1.6 release (Mdk bug #29513)
