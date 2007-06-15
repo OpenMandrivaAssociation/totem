@@ -12,7 +12,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.19.4
-Release: %mkrel 4
+Release: %mkrel 5
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #(pt) From https://bugs.launchpad.net/ubuntu/+source/totem/+bug/118302 with indent fixed
