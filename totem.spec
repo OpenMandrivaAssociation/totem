@@ -12,7 +12,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.19.4
-Release: %mkrel 5
+Release: %mkrel 6
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #(pt) From https://bugs.launchpad.net/ubuntu/+source/totem/+bug/118302 with indent fixed
@@ -46,6 +46,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: libgnome-window-settings-devel
 Requires: xine-plugins >= %xineversion
 Requires: totem-common = %{version}-%{release}
+Provides: totem-bin = %{version}-%{release}
 
 
 %description
@@ -63,6 +64,7 @@ Group:	Video
 Requires: gstreamer0.10-plugins-base >= %gstver
 Requires: gstreamer0.10-plugins-good
 Requires: totem-common = %{version}
+Provides: totem-bin = %{version}-%{release}
 #Requires: gstreamer0.10-ffmpeg >= %gstver
 #Suggests: gstreamer0.10-flac >= %gstver
 #Suggests: gstreamer0.10-faad >= %gstver
@@ -96,6 +98,7 @@ Group:	Video
 Requires: iso-codes
 Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
 Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
+Requires: totem-bin = %version
 
 %description common
 Common data files used by Totem.
