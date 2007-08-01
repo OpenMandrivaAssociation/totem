@@ -1,5 +1,6 @@
 %define major 7
-%define lib_name %mklibname totem-plparser %major
+%define libname %mklibname totem-plparser %major
+%define libnamedev %mklibname -d totem-plparser
 %define build_gstreamer 1
 %define build_xine 1
 %{?_with_gstreamer: %{expand: %%global build_gstreamer 1}}
@@ -106,22 +107,23 @@ Requires: totem-bin = %version
 %description common
 Common data files used by Totem.
 
-%package -n	%{lib_name}
+%package -n	%{libname}
 Summary:	%{summary}
 Group:		System/Libraries
 
-%description -n	%{lib_name}
+%description -n	%{libname}
 Shared library used by totem.
 
-%package -n	%{lib_name}-devel
+%package -n	%{libnamedev}
 Summary:	Static libraries, include files for totem playlist parser
 Group:		Development/GNOME and GTK+
 Provides:	totem-plparser-devel = %{version}
 Provides:	libtotem-plparser-devel = %{version}
-Requires:	%{lib_name} = %{version}
+Requires:	%{libname} = %{version}
 Conflicts: 	%{_lib}totem-plparser0-devel
+Obsoletes:	%mklibname -d totem-plparser 7
 
-%description -n	%{lib_name}-devel
+%description -n	%{libnamedev}
 Static libraries, include files for totem playlist parser
 
 %if %build_mozilla
@@ -338,8 +340,8 @@ fi
 %endif
 %endif
 
-%post -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %files common -f %name.lang
 %defattr(-,root,root)
@@ -389,11 +391,11 @@ fi
 %_libexecdir/totem-plugin-viewer-xine
 %endif
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(-,root,root)
 %{_libdir}/libtotem-plparser.so.%{major}*
 
-%files -n %{lib_name}-devel
+%files -n %{libnamedev}
 %defattr(-,root,root)
 %doc ChangeLog
 %{_libdir}/*.so
