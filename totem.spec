@@ -13,7 +13,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.20.0
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPL
@@ -69,9 +69,10 @@ Requires: gstreamer0.10-plugins-base >= %gstver
 Requires: gstreamer0.10-plugins-good
 Requires: totem-common = %{version}
 Provides: totem-bin = %{version}-%{release}
-#Requires: gstreamer0.10-ffmpeg >= %gstver
-#Suggests: gstreamer0.10-flac >= %gstver
-#Suggests: gstreamer0.10-faad >= %gstver
+Suggests: gstreamer0.10-ffmpeg >= %gstver
+Suggests: gstreamer0.10-flac >= %gstver
+Suggests: gstreamer0.10-plugins-bad >= %gstver
+Suggests: gstreamer0.10-faad >= %gstver
 
 %description gstreamer
 Totem is simple movie player for the GNOME desktop. It
