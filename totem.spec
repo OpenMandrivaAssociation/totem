@@ -13,7 +13,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.20.0
-Release: %mkrel 4
+Release: %mkrel 5
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 # (fc) 2.20.0-3mdv various SVN fixes
