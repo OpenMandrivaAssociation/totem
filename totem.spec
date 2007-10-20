@@ -12,12 +12,10 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.20.0
-Release: %mkrel 6
+Version: 2.20.1
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
-# (fc) 2.20.0-3mdv various SVN fixes
-Patch0: totem-2.20.0-svnfixes.patch
 License: GPL
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -145,7 +143,6 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
-%patch0 -p1 -b .svnfixes
 intltoolize --force
 aclocal
 autoconf
@@ -230,31 +227,6 @@ done
 
 #menu
 MIME_TYPES=`tr '\n' , < data/mime-type-list.txt | sed -e 's/,$//'`
-install -d -m 755 $RPM_BUILD_ROOT%{_menudir}
-cat >$RPM_BUILD_ROOT%{_menudir}/%{name} <<EOF
-?package(%{name}): \
-	command="%{_bindir}/%{name}-xine" \
-	needs="X11" \
-	section="Multimedia/Video" \
-	icon="totem.png" \
-	mimetypes="$MIME_TYPES,audio/basic,video/x-m4v" \
-	accept_url="true" \
-	multiple_files="true" \
-	title="Totem Movie Player" \
-	longtitle="Play movies and songs" \
-	startup_notify="true" \
-	kde_opt="InitialPreference=10" xdg="true"
-?package(%{name}): \
-	command="%{_bindir}/%{name}-xine" \
-	needs="X11" \
-	section="Multimedia/Sound" \
-	icon="totem.png" \
-	title="Totem Media Player" \
-	longtitle="Play movies and songs" \
-	startup_notify="true" \
-	kde_opt="InitialPreference=10" xdg="true"
-
-EOF
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="X-MandrivaLinux-Multimedia-Video" \
@@ -374,14 +346,12 @@ fi
 %defattr(-,root,root)
 %_bindir/*-xine
 %_libdir/nautilus/extensions-1.0/*-xine
-%_menudir/%name
 
 %if %build_gstreamer
 %files gstreamer
 %defattr(-,root,root)
 %_bindir/*-gstreamer
 %_libdir/nautilus/extensions-1.0/*-gstreamer
-%_menudir/%name-gstreamer
 %if %build_mozilla
 %files mozilla-gstreamer
 %defattr(-,root,root)
