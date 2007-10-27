@@ -1,4 +1,4 @@
-%define major 7
+%define major 9
 %define libname %mklibname totem-plparser %major
 %define libnamedev %mklibname -d totem-plparser
 %define build_gstreamer 1
@@ -12,7 +12,7 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.20.1
+Version: 2.21.0
 Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
@@ -47,6 +47,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: shared-mime-info >= 0.22
 BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
+BuildRequires: gtk2-devel >= 2.12.1
 Requires: pygtk2.0
 Requires: xine-plugins >= %xineversion
 Requires: totem-common = %{version}-%{release}
@@ -143,10 +144,6 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
-intltoolize --force
-aclocal
-autoconf
-automake
 
 %build
 
@@ -189,6 +186,7 @@ GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
 %if %build_mozilla
 mv %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin-xine.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin-xine.so
+mv %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin-xine.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin-xine.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin-xine.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin-xine.so
@@ -197,6 +195,7 @@ mv %buildroot%_libexecdir/totem-plugin-viewer %buildroot%_libexecdir/totem-plugi
 %endif
 cd ..
 mv $RPM_BUILD_ROOT%{_bindir}/totem $RPM_BUILD_ROOT%{_bindir}/totem-xine
+mv $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview-xine
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer-xine
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer-xine
 mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-xine 
@@ -208,6 +207,7 @@ GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
 %if %build_mozilla
 mv %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin-gstreamer.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin-gstreamer.so
+mv %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin-gstreamer.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin-gstreamer.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin-gstreamer.so
 mv %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin-gstreamer.so
@@ -215,6 +215,7 @@ mv %buildroot%_libexecdir/totem-plugin-viewer %buildroot%_libexecdir/totem-plugi
 %endif
 cd ..
 mv $RPM_BUILD_ROOT%{_bindir}/totem $RPM_BUILD_ROOT%{_bindir}/totem-gstreamer
+mv $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview-gstreamer
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer-gstreamer
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer-gstreamer
 mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-gstreamer
@@ -232,10 +233,6 @@ desktop-file-install --vendor="" \
   --add-category="X-MandrivaLinux-Multimedia-Video" \
   --add-category="X-MandrivaLinux-CrossDesktop" \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
-
-%if %build_gstreamer
-cat $RPM_BUILD_ROOT%{_menudir}/%{name} | sed -e 's/xine/gstreamer/g' -e 's/package(totem)/package(totem-gstreamer)/g' > $RPM_BUILD_ROOT%{_menudir}/%{name}-gstreamer
-%endif
 
 #icons
 mkdir -p %buildroot{%_liconsdir,%_miconsdir,%_iconsdir}
@@ -260,7 +257,7 @@ rm -rf $RPM_BUILD_ROOT
 %update_desktop_database
 
 %post
-update-alternatives --install %{_bindir}/totem totem /usr/bin/totem-xine 20 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer /usr/bin/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer /usr/bin/totem-video-indexer-xine 
+update-alternatives --install %{_bindir}/totem totem %_bindir/totem-xine 20 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-xine --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-xine
 %{update_menus}
 
 %if %build_mozilla
@@ -281,7 +278,7 @@ update-alternatives --auto totem-mozilla
 
 %postun
 if [ "$1" = "0" ]; then
-  update-alternatives --remove totem /usr/bin/totem-xine 
+  update-alternatives --remove totem %_bindir/totem-xine 
 fi
 %{clean_menus}
 
@@ -298,7 +295,7 @@ update-alternatives --auto totem
 
 %if %build_gstreamer
 %post gstreamer
-update-alternatives --install %{_bindir}/totem totem /usr/bin/totem-gstreamer 10 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-gstreamer --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer /usr/bin/totem-video-thumbnailer-gstreamer --slave %{_bindir}/totem-video-indexer totem-video-indexer /usr/bin/totem-video-indexer-gstreamer
+update-alternatives --install %{_bindir}/totem totem %_bindir/totem-gstreamer 10 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-gstreamer --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-gstreamer --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-gstreamer  --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-gstreamer
 %{update_menus}
 %if %build_mozilla
 %post mozilla-gstreamer
@@ -307,7 +304,7 @@ update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %
 
 %postun gstreamer
 if [ "$1" = "0" ]; then
-  update-alternatives --remove totem /usr/bin/totem-gstreamer
+  update-alternatives --remove totem %_bindir/totem-gstreamer
 fi
 %{clean_menus}
 %if %build_mozilla
