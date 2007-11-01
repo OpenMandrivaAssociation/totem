@@ -1,4 +1,4 @@
-%define major 9
+%define major 10
 %define libname %mklibname totem-plparser %major
 %define libnamedev %mklibname -d totem-plparser
 %define build_gstreamer 1
@@ -12,7 +12,7 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.21.0
+Version: 2.21.1
 Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
