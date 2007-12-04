@@ -1,6 +1,4 @@
 %define major 10
-%define libname %mklibname totem-plparser %major
-%define libnamedev %mklibname -d totem-plparser
 %define build_gstreamer 1
 %define build_xine 1
 %{?_with_gstreamer: %{expand: %%global build_gstreamer 1}}
@@ -12,7 +10,7 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.21.2
+Version: 2.21.4
 Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
@@ -48,6 +46,7 @@ BuildRequires: shared-mime-info >= 0.22
 BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
+BuildRequires: libtotem-plparser-devel >= 2.21.3
 Requires: pygtk2.0
 Requires: xine-plugins >= %xineversion
 Requires: totem-common = %{version}-%{release}
@@ -109,24 +108,6 @@ Requires: totem-bin = %version
 %description common
 Common data files used by Totem.
 
-%package -n	%{libname}
-Summary:	%{summary}
-Group:		System/Libraries
-
-%description -n	%{libname}
-Shared library used by totem.
-
-%package -n	%{libnamedev}
-Summary:	Static libraries, include files for totem playlist parser
-Group:		Development/GNOME and GTK+
-Provides:	totem-plparser-devel = %{version}
-Provides:	libtotem-plparser-devel = %{version}
-Requires:	%{libname} = %{version}
-Conflicts: 	%{_lib}totem-plparser0-devel
-Obsoletes:	%mklibname -d totem-plparser 7
-
-%description -n	%{libnamedev}
-Static libraries, include files for totem playlist parser
 
 %if %build_mozilla
 %package mozilla
@@ -315,8 +296,6 @@ fi
 %endif
 %endif
 
-%post -n %{libname} -p /sbin/ldconfig
-%postun -n %{libname} -p /sbin/ldconfig
 
 %files common -f %name.lang
 %defattr(-,root,root)
@@ -364,17 +343,5 @@ fi
 %_libexecdir/totem-plugin-viewer-xine
 %endif
 
-%files -n %{libname}
-%defattr(-,root,root)
-%{_libdir}/libtotem-plparser.so.%{major}*
-
-%files -n %{libnamedev}
-%defattr(-,root,root)
-%doc ChangeLog
-%{_libdir}/*.so
-%attr(644,root,root) %{_libdir}/*.la
-%{_libdir}/*.a
-%{_includedir}/totem
-%{_libdir}/pkgconfig/*
 
 
