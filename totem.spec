@@ -16,7 +16,6 @@ Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPL
 Group: Video
-BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 URL: http://www.hadess.net/totem.php3
 %if %build_gstreamer
 BuildRequires: libgstreamer-plugins-base-devel >= %gstver
