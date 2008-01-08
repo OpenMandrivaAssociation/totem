@@ -10,8 +10,8 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.21.5
-Release: %mkrel 2
+Version: 2.21.90
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPL
@@ -33,7 +33,7 @@ BuildRequires: gnome-doc-utils
 BuildRequires: liblirc-devel
 BuildRequires: libnautilus-devel
 BuildRequires: libgalago-devel
-BuildRequires: libvala-devel
+BuildRequires: libvala-devel >= 0.1.5
 BuildRequires: libbluez-devel
 BuildRequires: libepc-devel
 BuildRequires: hal-devel
@@ -47,7 +47,7 @@ BuildRequires: shared-mime-info >= 0.22
 BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
-BuildRequires: libtotem-plparser-devel >= 2.21.3
+BuildRequires: libtotem-plparser-devel >= 2.21.90
 Requires: pygtk2.0
 Requires: xine-plugins >= %xineversion
 Requires: totem-common = %{version}-%{release}
@@ -126,7 +126,6 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
-cp bindings/vala/totem.vala bindings/vala/totem.vapi
 
 %build
 
