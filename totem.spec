@@ -262,7 +262,6 @@ update-alternatives --auto totem-mozilla
 if [ "$1" = "0" ]; then
   update-alternatives --remove totem %_bindir/totem-xine 
 fi
-%{clean_menus}
 
 %if %build_mozilla
 %postun mozilla
@@ -278,7 +277,6 @@ update-alternatives --auto totem
 %if %build_gstreamer
 %post gstreamer
 update-alternatives --install %{_bindir}/totem totem %_bindir/totem-gstreamer 10 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-gstreamer --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-gstreamer --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-gstreamer  --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-gstreamer
-%{update_menus}
 %if %build_mozilla
 %post mozilla-gstreamer
 update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %{_libexecdir}/totem-plugin-viewer-gstreamer 10
@@ -288,7 +286,6 @@ update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %
 if [ "$1" = "0" ]; then
   update-alternatives --remove totem %_bindir/totem-gstreamer
 fi
-%{clean_menus}
 %if %build_mozilla
 %postun mozilla-gstreamer
 if [ "$1" = "0" ]; then
