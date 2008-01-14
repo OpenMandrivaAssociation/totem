@@ -11,7 +11,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.21.90
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPL
@@ -180,7 +180,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/totem $RPM_BUILD_ROOT%{_bindir}/totem-xine
 mv $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview-xine
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer-xine
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer-xine
-mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-xine 
+mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-xine 
 
 
 %if %build_gstreamer
@@ -200,7 +200,7 @@ mv $RPM_BUILD_ROOT%{_bindir}/totem $RPM_BUILD_ROOT%{_bindir}/totem-gstreamer
 mv $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview-gstreamer
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer-gstreamer
 mv $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer-gstreamer
-mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-gstreamer
+mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-gstreamer
 %endif
 
 %find_lang %name --with-gnome
@@ -226,7 +226,7 @@ install -D -m 644 %{SOURCE1} %buildroot/%_liconsdir/%name.png
 
 
 # remove unpackaged files
-rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-1.0}/*.{la,a} %buildroot/var/lib/scrollkeeper 
+rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper 
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -239,7 +239,7 @@ rm -rf $RPM_BUILD_ROOT
 %update_desktop_database
 
 %post
-update-alternatives --install %{_bindir}/totem totem %_bindir/totem-xine 20 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-xine --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-xine
+update-alternatives --install %{_bindir}/totem totem %_bindir/totem-xine 20 --slave %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-xine --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-xine
 %{update_menus}
 
 %if %build_mozilla
@@ -276,7 +276,7 @@ update-alternatives --auto totem
 
 %if %build_gstreamer
 %post gstreamer
-update-alternatives --install %{_bindir}/totem totem %_bindir/totem-gstreamer 10 --slave %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-1.0/libtotem-properties-page-gstreamer --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-gstreamer --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-gstreamer  --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-gstreamer
+update-alternatives --install %{_bindir}/totem totem %_bindir/totem-gstreamer 10 --slave %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-gstreamer --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-gstreamer --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-gstreamer  --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-gstreamer
 %if %build_mozilla
 %post mozilla-gstreamer
 update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %{_libexecdir}/totem-plugin-viewer-gstreamer 10
@@ -319,13 +319,13 @@ fi
 %files 
 %defattr(-,root,root)
 %_bindir/*-xine
-%_libdir/nautilus/extensions-1.0/*-xine
+%_libdir/nautilus/extensions-2.0/*-xine
 
 %if %build_gstreamer
 %files gstreamer
 %defattr(-,root,root)
 %_bindir/*-gstreamer
-%_libdir/nautilus/extensions-1.0/*-gstreamer
+%_libdir/nautilus/extensions-2.0/*-gstreamer
 %if %build_mozilla
 %files mozilla-gstreamer
 %defattr(-,root,root)
