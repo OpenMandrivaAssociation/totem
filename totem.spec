@@ -11,7 +11,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.21.90
-Release: %mkrel 3
+Release: %mkrel 4
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPL
@@ -102,6 +102,7 @@ Firefox. This version is based on the gstreamer backend.
 Summary: Common data files for totem 
 Group:	Video
 Requires: iso-codes
+Requires: python-gdata
 Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
 Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
 Requires: totem-bin = %version
