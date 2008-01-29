@@ -14,6 +14,8 @@ Version: 2.21.90
 Release: %mkrel 4
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
+# gw fix this: http://bugzilla.gnome.org/show_bug.cgi?id=512920
+Patch: totem-2.21.90-vala.patch
 License: GPL
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -127,6 +129,7 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 
