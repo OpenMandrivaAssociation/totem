@@ -10,13 +10,10 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.21.94
+Version: 2.21.95
 Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
-#gw from svn: add missing bug report tool (upstream bug #518486)
-Patch: totem-5175-bugreport.patch
-Patch1: totem-2.21.94-xine-build.patch
 License: GPL
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -130,11 +127,6 @@ This version is based on the xine backend.
 
 %prep
 %setup -q
-cd data
-%patch
-cd ..
-%patch1 -p1
-automake
 
 %build
 
