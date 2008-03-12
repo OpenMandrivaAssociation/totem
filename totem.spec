@@ -11,7 +11,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.22.0
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPL
@@ -238,6 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 %post_install_gconf_schemas %schemas
 %update_icon_cache hicolor
 %update_desktop_database
+%update_menus
 
 %post
 update-alternatives --install %{_bindir}/totem totem %_bindir/totem-xine 20 --slave %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-xine --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-xine
@@ -254,6 +255,7 @@ update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %
 %clean_scrollkeeper
 %clean_icon_cache hicolor
 %clean_desktop_database
+%clean_menus
 
 %triggerpostun -- totem-mozilla < 2.18.0-2mdv, totem-mozilla-gstreamer < 2.18.0-2mdv
 update-alternatives --auto totem-mozilla
@@ -266,7 +268,7 @@ fi
 %if %build_mozilla
 %postun mozilla
 if [ "$1" = "0" ]; then
-  update-alternatives --remove totem-plugin-viewer %_libexecdir/totem-plugin-viewer-xine
+  update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-xine
 fi
 %endif
 
@@ -289,7 +291,7 @@ fi
 %if %build_mozilla
 %postun mozilla-gstreamer
 if [ "$1" = "0" ]; then
-  update-alternatives --remove totem-plugin-viewer %_libexecdir/totem-plugin-viewer-gstreamer
+  update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstreamer
 fi
 %endif
 %endif
