@@ -261,13 +261,13 @@ update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %
 update-alternatives --auto totem-mozilla
 
 %postun
-if [ "$1" = "0" ]; then
+if [ ! -e "%_bindir/totem-xine" ]; then
   update-alternatives --remove totem %_bindir/totem-xine 
 fi
 
 %if %build_mozilla
 %postun mozilla
-if [ "$1" = "0" ]; then
+if [ ! -e "%_libexecdir/totem-plugin-viewer-xine" ]; then
   update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-xine
 fi
 %endif
@@ -285,12 +285,12 @@ update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %
 %endif
 
 %postun gstreamer
-if [ "$1" = "0" ]; then
+if [ ! -e "%_bindir/totem-gstreamer" ]; then
   update-alternatives --remove totem %_bindir/totem-gstreamer
 fi
 %if %build_mozilla
 %postun mozilla-gstreamer
-if [ "$1" = "0" ]; then
+if [ ! -e "%_libexecdir/totem-plugin-viewer-gstreamer" ]; then
   update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstreamer
 fi
 %endif
