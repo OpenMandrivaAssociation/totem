@@ -68,6 +68,7 @@ Summary: %{summary}
 Group:	Video
 Requires: gstreamer0.10-plugins-base >= %gstver
 Requires: gstreamer0.10-plugins-good
+Requires: gstreamer0.10-ffmpeg
 Requires: totem-common = %{version}
 Provides: totem-bin = %{version}-%{release}
 
