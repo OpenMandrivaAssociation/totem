@@ -230,12 +230,16 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/exte
 rm -rf $RPM_BUILD_ROOT
 
 %post common
+%if %mdkversion < 200900
 %update_scrollkeeper
+%endif
 %define schemas totem totem-video-thumbnail totem-handlers
+%if %mdkversion < 200900
 %post_install_gconf_schemas %schemas
 %update_icon_cache hicolor
 %update_desktop_database
 %update_menus
+%endif
 
 %post
 update-alternatives --install %{_bindir}/totem totem %_bindir/totem-xine 20 --slave %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-xine --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-xine
@@ -248,11 +252,13 @@ update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %
 %preun common
 %preun_uninstall_gconf_schemas %schemas
 
+%if %mdkversion < 200900
 %postun common
 %clean_scrollkeeper
 %clean_icon_cache hicolor
 %clean_desktop_database
 %clean_menus
+%endif
 
 %triggerpostun -- totem-mozilla < 2.18.0-2mdv, totem-mozilla-gstreamer < 2.18.0-2mdv
 update-alternatives --auto totem-mozilla
