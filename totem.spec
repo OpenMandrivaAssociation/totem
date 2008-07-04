@@ -1,20 +1,31 @@
-%define major 10
 %define build_gstreamer 1
 %define build_xine 1
 %{?_with_gstreamer: %{expand: %%global build_gstreamer 1}}
 %{?_without_gstreamer: %{expand: %%global build_gstreamer 0}}
+%{?_with_xine: %{expand: %%global build_xine 1}}
+%{?_without_xine: %{expand: %%global build_xine 0}}
 %define build_mozilla 1
 
 %define xineversion 1.1.2
 %define gstver 0.10
 
+%define major 0
+%define soname %{major}.0.0
+%define libnamexine %mklibname baconvideowidget-xine %major
+%define libnamegstreamer %mklibname baconvideowidget-gstreamer %major
+
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.22.2
-Release: %mkrel 2
+Version: 2.23.4
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
-License: GPL
+#gw from Fedora:
+# http://cvs.fedoraproject.org/viewcvs/rpms/totem/devel/totem-bin-backend-ondemand.sh
+Source2: totem-bin-backend-ondemand.sh
+Patch: totem-r5484-vala-includes.patch
+Patch1: totem-2.23.4-fix-linking.patch
+License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 URL: http://www.hadess.net/totem.php3
@@ -23,10 +34,12 @@ BuildRequires: libgstreamer-plugins-base-devel >= %gstver
 BuildRequires: gstreamer0.10-plugins-good
 BuildRequires: gstreamer0.10-plugins-base
 %endif
+%if %build_xine
+BuildRequires: libxine-devel >= %xineversion
+%endif
 BuildRequires: libxdmcp-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxxf86vm-devel
-BuildRequires: libxine-devel >= %xineversion
 BuildRequires: libnvtvsimple-devel
 BuildRequires: scrollkeeper
 BuildRequires: gnome-doc-utils
@@ -48,10 +61,6 @@ BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
 BuildRequires: libtotem-plparser-devel >= 2.21.90
-Requires: pygtk2.0
-Requires: xine-plugins >= %xineversion
-Requires: totem-common = %{version}-%{release}
-Provides: totem-bin = %{version}-%{release}
 
 
 %description
@@ -60,17 +69,43 @@ features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
 This version is based on the xine backend.
 
-#gw TODO: obsolete totem-gstreamer in main totem package and move the xine
-#gw backend to a totem-xine package
+
+%package common
+Summary: Common data files for totem 
+Group:	Video
+Requires: pygtk2.0
+Requires: iso-codes
+Requires: python-gdata
+Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
+Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
+
+%description common
+Common data files used by Totem.
+
+%if %build_xine
+%package xine
+Summary: %{summary}
+Group:	Video
+Requires: %libnamexine = %version-%release
+Requires: %name-common = %version
+Provides:  totem
+Obsoletes: totem < 2.23
+
+%description xine
+Totem is simple movie player for the GNOME desktop. It
+features a simple playlist, a full-screen mode, seek and volume
+controls, as well as a pretty complete keyboard navigation.
+
+This version is based on the xine backend.
+%endif
+
 %if %build_gstreamer
 %package gstreamer
 Summary: %{summary}
 Group:	Video
-Requires: gstreamer0.10-plugins-base >= %gstver
-Requires: gstreamer0.10-plugins-good
-Requires: gstreamer0.10-ffmpeg
-Requires: totem-common = %{version}
-Provides: totem-bin = %{version}-%{release}
+Requires: %libnamegstreamer = %{version}-%{release}
+Requires: %name-common = %version
+Provides: totem
 
 %description gstreamer
 Totem is simple movie player for the GNOME desktop. It
@@ -78,34 +113,7 @@ features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
 
 This version is based on the gstreamer backend.
-
-%if %build_mozilla
-%package mozilla-gstreamer
-Summary: Totem video plugin for Mozilla Firefox - gstreamer backend
-Group: Networking/WWW
-BuildRequires: mozilla-firefox-devel
-BuildRequires: dbus-devel >= 0.35
-%define firefox_version %(rpm -q mozilla-firefox --queryformat %{VERSION})
-Requires: %mklibname mozilla-firefox %{firefox_version}
-Requires: totem-gstreamer = %version
-
-%description mozilla-gstreamer
-This embeds the Totem video player into web browsers based on Mozilla
-Firefox. This version is based on the gstreamer backend.
 %endif
-%endif
-
-%package common
-Summary: Common data files for totem 
-Group:	Video
-Requires: iso-codes
-Requires: python-gdata
-Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
-Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
-Requires: totem-bin = %version
-
-%description common
-Common data files used by Totem.
 
 
 %if %build_mozilla
@@ -114,32 +122,82 @@ Summary: Totem video plugin for Mozilla Firefox
 Group: Networking/WWW
 BuildRequires: mozilla-firefox-devel
 BuildRequires: dbus-devel >= 0.35
+%define firefox_version %(rpm -q mozilla-firefox --queryformat %{VERSION})
 Requires: %mklibname mozilla-firefox %{firefox_version}
-Requires: totem = %version
+Requires: totem-common = %version
+Obsoletes: totem-mozilla-gstreamer
+Provides: totem-mozilla-gstreamer
 
 %description mozilla
 This embeds the Totem video player into web browsers based on Mozilla Firefox.
 This version is based on the xine backend.
 %endif
 
+%package nautilus
+Group:Video
+Summary: Video and Audio Properties tab for Nautilus
+Requires: %name-common = %version
+
+%description nautilus
+A Nautilus extension that shows the properties of audio and video
+files in the properties dialogue.
+
+
+%package -n %libnamexine
+Summary: Totem video widget shared library, xine backend
+Group: System/Libraries
+Requires: xine-plugins >= %xineversion
+
+%description -n %libnamexine
+Totem is simple movie player for the GNOME desktop. It
+features a simple playlist, a full-screen mode, seek and volume
+controls, as well as a pretty complete keyboard navigation.
+
+This is the Widget library based on xine shared among the totem
+components.
+
+%if %build_gstreamer
+%package -n %libnamegstreamer
+Summary: Totem video widget shared library, xine backend
+Group: System/Libraries
+Requires: gstreamer0.10-plugins-base >= %gstver
+Requires: gstreamer0.10-plugins-good
+
+%description -n %libnamegstreamer
+Totem is simple movie player for the GNOME desktop. It
+features a simple playlist, a full-screen mode, seek and volume
+controls, as well as a pretty complete keyboard navigation.
+
+This is the Widget library based on xine shared among the totem
+components.
+%endif
+
 %prep
 %setup -q
-
+%patch -p1
+%patch1 -p1
+libtoolize --copy --force
+aclocal
+autoconf
+automake
 %build
-
+#gw else libthumbnail.la does not build
+%define _disable_ld_no_undefined 1
+%if %build_xine
 # Build xine version
 [ -d xine-build ] || mkdir xine-build
 cd xine-build
 
 CONFIGURE_TOP=.. %configure2_5x --disable-run-in-source-tree \
 %if %build_mozilla
---enable-mozilla \
+--enable-browser-plugins \
 %else
---disable-mozilla \
+--disable-browser-plugins \
 %endif
 --enable-xine
 %make
 cd ..
+%endif
 
 %if %build_gstreamer
 # Build gstreamer version
@@ -148,58 +206,43 @@ cd gstreamer-build
 
 CONFIGURE_TOP=.. %configure2_5x --disable-run-in-source-tree \
 %if %build_mozilla
---enable-mozilla \
+--enable-browser-plugins \
 %else
---disable-mozilla
+--disable-browser-plugins \
 %endif
+
 
 %make
 cd ..
 %endif
 
-
 %install
 rm -rf $RPM_BUILD_ROOT %name.lang
-
-cd xine-build
+%if %build_xine
+pushd xine-build
 GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
-%if %build_mozilla
-mv %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin-xine.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin-xine.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin-xine.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin-xine.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin-xine.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin-xine.so
+mv %buildroot%_libdir/libbaconvideowidget.so.%{soname} %buildroot%_libdir/libbaconvideowidget-xine.so.%{soname}
+popd
 
-mv %buildroot%_libexecdir/totem-plugin-viewer %buildroot%_libexecdir/totem-plugin-viewer-xine
+cat > %buildroot%_bindir/totem-xine << EOF
+#!/bin/sh
+%_bindir/totem-backend -b xine totem "\$@"
+EOF
 %endif
-cd ..
-mv $RPM_BUILD_ROOT%{_bindir}/totem $RPM_BUILD_ROOT%{_bindir}/totem-xine
-mv $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview-xine
-mv $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer-xine
-mv $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer-xine
-mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-xine 
-
 
 %if %build_gstreamer
-cd gstreamer-build
+pushd gstreamer-build/
 GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
-%if %build_mozilla
-mv %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-basic-plugin-gstreamer.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-complex-plugin-gstreamer.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-cone-plugin-gstreamer.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-gmp-plugin-gstreamer.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-mully-plugin-gstreamer.so
-mv %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin.so %buildroot%_libdir/mozilla/plugins/libtotem-narrowspace-plugin-gstreamer.so
-mv %buildroot%_libexecdir/totem-plugin-viewer %buildroot%_libexecdir/totem-plugin-viewer-gstreamer
+mv %buildroot%_libdir/libbaconvideowidget.so.%{soname} %buildroot%_libdir/libbaconvideowidget-gstreamer.so.%{soname}
+popd
+
+cat > %buildroot%_bindir/totem-gstreamer << EOF
+#!/bin/sh
+%_bindir/totem-backend -b gstreamer totem "\$@"
+EOF
 %endif
-cd ..
-mv $RPM_BUILD_ROOT%{_bindir}/totem $RPM_BUILD_ROOT%{_bindir}/totem-gstreamer
-mv $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview $RPM_BUILD_ROOT%{_bindir}/totem-audio-preview-gstreamer
-mv $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer $RPM_BUILD_ROOT%{_bindir}/totem-video-thumbnailer-gstreamer
-mv $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer $RPM_BUILD_ROOT%{_bindir}/totem-video-indexer-gstreamer
-mv $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-gstreamer
-%endif
+
+install -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}-backend
 
 %find_lang %name --with-gnome
 for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
@@ -224,81 +267,57 @@ install -D -m 644 %{SOURCE1} %buildroot/%_liconsdir/%name.png
 
 
 # remove unpackaged files
-rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper 
+rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper
+
+
+#gw there is no devel package yet
+rm -f %buildroot%_libdir/libbaconvideowidget.{a,la,so}
+
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post common
-%if %mdkversion < 200900
-%update_scrollkeeper
-%endif
 %define schemas totem totem-video-thumbnail totem-handlers
 %if %mdkversion < 200900
 %post_install_gconf_schemas %schemas
 %update_icon_cache hicolor
 %update_desktop_database
 %update_menus
+%update_scrollkeeper
 %endif
-
-%post
-update-alternatives --install %{_bindir}/totem totem %_bindir/totem-xine 20 --slave %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-xine --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-xine --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-xine --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-xine
-
-%if %build_mozilla
-%post mozilla
-update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %{_libexecdir}/totem-plugin-viewer-xine 20
-%endif
+update-alternatives --remove totem %_bindir/totem-xine
+update-alternatives --remove totem %_bindir/totem-gstreamer
+update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-xine
+update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstreamer
 
 %preun common
 %preun_uninstall_gconf_schemas %schemas
 
-%if %mdkversion < 200900
 %postun common
+%if %mdkversion < 200900
 %clean_scrollkeeper
 %clean_icon_cache hicolor
 %clean_desktop_database
 %clean_menus
 %endif
 
-%triggerpostun -- totem-mozilla < 2.18.0-2mdv, totem-mozilla-gstreamer < 2.18.0-2mdv
-update-alternatives --auto totem-mozilla
-
-%postun
-if [ ! -e "%_bindir/totem-xine" ]; then
-  update-alternatives --remove totem %_bindir/totem-xine 
-fi
-
-%if %build_mozilla
-%postun mozilla
-if [ ! -e "%_libexecdir/totem-plugin-viewer-xine" ]; then
-  update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-xine
-fi
+%if %build_xine
+%post -n %libnamexine
+/usr/sbin/alternatives --install %{_libdir}/libbaconvideowidget.so.%{soname} totem-backend %{_libdir}/libbaconvideowidget-xine.so.%{soname} 20
+/sbin/ldconfig
+%postun -n %libnamexine
+[ -e "%{_libdir}/libbaconvideowidget-xine.so.%{soname}" ] || update-alternatives --remove totem-backend %{_libdir}/libbaconvideowidget-xine.so.%{soname}
 %endif
-
-%triggerpostun -- totem < 1.0.1-2mdk
-update-alternatives --auto totem
-
 
 %if %build_gstreamer
-%post gstreamer
-update-alternatives --install %{_bindir}/totem totem %_bindir/totem-gstreamer 10 --slave %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page.so totem_nautilus_properties %{_libdir}/nautilus/extensions-2.0/libtotem-properties-page-gstreamer --slave %{_bindir}/totem-video-thumbnailer totem-video-thumbnailer %_bindir/totem-video-thumbnailer-gstreamer --slave %{_bindir}/totem-video-indexer totem-video-indexer %_bindir/totem-video-indexer-gstreamer  --slave %{_bindir}/totem-audio-preview totem-audio-preview %_bindir/totem-audio-preview-gstreamer
-%if %build_mozilla
-%post mozilla-gstreamer
-update-alternatives --install %{_libexecdir}/totem-plugin-viewer totem-mozilla %{_libexecdir}/totem-plugin-viewer-gstreamer 10
+%post -n %libnamegstreamer
+/usr/sbin/alternatives --install %{_libdir}/libbaconvideowidget.so.%{soname} totem-backend %{_libdir}/libbaconvideowidget-gstreamer.so.%{soname} 10
+/sbin/ldconfig
+%postun -n %libnamegstreamer
+[ -e "%{_libdir}/libbaconvideowidget-gstreamer.so.%{soname}" ] || update-alternatives --remove totem-backend %{_libdir}/libbaconvideowidget-gstreamer.so.%{soname}
 %endif
-
-%postun gstreamer
-if [ ! -e "%_bindir/totem-gstreamer" ]; then
-  update-alternatives --remove totem %_bindir/totem-gstreamer
-fi
-%if %build_mozilla
-%postun mozilla-gstreamer
-if [ ! -e "%_libexecdir/totem-plugin-viewer-gstreamer" ]; then
-  update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstreamer
-fi
-%endif
-%endif
-
 
 %files common -f %name.lang
 %defattr(-,root,root)
@@ -314,38 +333,51 @@ fi
 %dir %_libdir/totem
 %_libdir/totem/plugins
 %_libdir/totem/totem-bugreport.py
-%if %build_mozilla
-%_libdir/mozilla/plugins/*.xpt
-%endif
 %_mandir/man1/*
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
 %{_liconsdir}/%name.png
-
-%files 
 %defattr(-,root,root)
-%_bindir/*-xine
-%_libdir/nautilus/extensions-2.0/*-xine
+%_bindir/totem
+%_bindir/totem-audio-preview
+%_bindir/totem-backend
+%_bindir/totem-video-indexer
+%_bindir/totem-video-thumbnailer
+
+
+%if %build_xine
+%files xine
+%attr(755,root,root) %_bindir/totem-xine
+%endif
+
+
+%files nautilus
+%defattr(-,root,root)
+%_libdir/nautilus/extensions-2.0/*
 
 %if %build_gstreamer
 %files gstreamer
 %defattr(-,root,root)
-%_bindir/*-gstreamer
-%_libdir/nautilus/extensions-2.0/*-gstreamer
-%if %build_mozilla
-%files mozilla-gstreamer
-%defattr(-,root,root)
-%_libdir/mozilla/plugins/libtotem*gstreamer.so
-%_libexecdir/totem-plugin-viewer-gstreamer
-%endif
+%attr(755,root,root) %_bindir/totem-gstreamer
 %endif
 
 %if %build_mozilla
 %files mozilla
 %defattr(-,root,root)
-%_libdir/mozilla/plugins/libtotem*xine.so
-%_libexecdir/totem-plugin-viewer-xine
+%_libdir/mozilla/plugins/libtotem*.so
+%_libexecdir/totem-plugin-viewer
 %endif
 
+%if %build_xine
+%files -n %libnamexine
+%defattr(-,root,root)
+%_libdir/libbaconvideowidget-xine.so.%{soname}
+%ghost %_libdir/libbaconvideowidget.so.%{major}
+%endif
 
-
+%if %build_gstreamer
+%files -n %libnamegstreamer
+%defattr(-,root,root)
+%_libdir/libbaconvideowidget-gstreamer.so.%{soname}
+%ghost %_libdir/libbaconvideowidget.so.%{major}
+%endif
