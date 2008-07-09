@@ -14,10 +14,15 @@
 %define libnamexine %mklibname baconvideowidget-xine %major
 %define libnamegstreamer %mklibname baconvideowidget-gstreamer %major
 
+%define backend_suffix %{nil}
+%if %_lib != lib
+%define backend_suffix -64
+%endif
+
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.23.4
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw from Fedora:
@@ -305,18 +310,18 @@ update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstr
 
 %if %build_xine
 %post -n %libnamexine
-/usr/sbin/alternatives --install %{_libdir}/libbaconvideowidget.so.%{soname} totem-backend %{_libdir}/libbaconvideowidget-xine.so.%{soname} 20
+/usr/sbin/alternatives --install %{_libdir}/libbaconvideowidget.so.%{soname} totem-backend%{backend_suffix} %{_libdir}/libbaconvideowidget-xine.so.%{soname} 20
 /sbin/ldconfig
 %postun -n %libnamexine
-[ -e "%{_libdir}/libbaconvideowidget-xine.so.%{soname}" ] || update-alternatives --remove totem-backend %{_libdir}/libbaconvideowidget-xine.so.%{soname}
+[ -e "%{_libdir}/libbaconvideowidget-xine.so.%{soname}" ] || update-alternatives --remove totem-backend%{backend_suffix} %{_libdir}/libbaconvideowidget-xine.so.%{soname}
 %endif
 
 %if %build_gstreamer
 %post -n %libnamegstreamer
-/usr/sbin/alternatives --install %{_libdir}/libbaconvideowidget.so.%{soname} totem-backend %{_libdir}/libbaconvideowidget-gstreamer.so.%{soname} 10
+/usr/sbin/alternatives --install %{_libdir}/libbaconvideowidget.so.%{soname} totem-backend%{backend_suffix} %{_libdir}/libbaconvideowidget-gstreamer.so.%{soname} 10
 /sbin/ldconfig
 %postun -n %libnamegstreamer
-[ -e "%{_libdir}/libbaconvideowidget-gstreamer.so.%{soname}" ] || update-alternatives --remove totem-backend %{_libdir}/libbaconvideowidget-gstreamer.so.%{soname}
+[ -e "%{_libdir}/libbaconvideowidget-gstreamer.so.%{soname}" ] || update-alternatives --remove totem-backend%{backend_suffix} %{_libdir}/libbaconvideowidget-gstreamer.so.%{soname}
 %endif
 
 %files common -f %name.lang
