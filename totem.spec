@@ -125,10 +125,7 @@ This version is based on the gstreamer backend.
 %package mozilla
 Summary: Totem video plugin for Mozilla Firefox
 Group: Networking/WWW
-BuildRequires: mozilla-firefox-devel
 BuildRequires: dbus-devel >= 0.35
-%define firefox_version %(rpm -q mozilla-firefox --queryformat %{VERSION})
-Requires: %mklibname mozilla-firefox %{firefox_version}
 Requires: totem-common = %version
 Obsoletes: totem-mozilla-gstreamer
 Provides: totem-mozilla-gstreamer
