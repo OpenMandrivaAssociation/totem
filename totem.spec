@@ -21,15 +21,13 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.23.4
-Release: %mkrel 4
+Version: 2.23.91
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw from Fedora:
 # http://cvs.fedoraproject.org/viewcvs/rpms/totem/devel/totem-bin-backend-ondemand.sh
 Source2: totem-bin-backend-ondemand.sh
-Patch: totem-r5484-vala-includes.patch
-Patch1: totem-2.23.4-fix-linking.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -65,7 +63,7 @@ BuildRequires: shared-mime-info >= 0.22
 BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
-BuildRequires: libtotem-plparser-devel >= 2.21.90
+BuildRequires: libtotem-plparser-devel >= 2.23.91
 
 
 %description
@@ -176,12 +174,7 @@ components.
 
 %prep
 %setup -q
-%patch -p1
-%patch1 -p1
-libtoolize --copy --force
-aclocal
-autoconf
-automake
+
 %build
 #gw else libthumbnail.la does not build
 %define _disable_ld_no_undefined 1
@@ -323,7 +316,7 @@ update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstr
 
 %files common -f %name.lang
 %defattr(-,root,root)
-%doc README AUTHORS TODO NEWS data/lirc_example
+%doc README AUTHORS TODO NEWS
 %_sysconfdir/gconf/schemas/totem.schemas
 %_sysconfdir/gconf/schemas/totem-handlers.schemas
 %_sysconfdir/gconf/schemas/totem-video-thumbnail.schemas
