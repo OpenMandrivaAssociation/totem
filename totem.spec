@@ -158,7 +158,7 @@ components.
 
 %if %build_gstreamer
 %package -n %libnamegstreamer
-Summary: Totem video widget shared library, xine backend
+Summary: Totem video widget shared library, gstreamer backend
 Group: System/Libraries
 Requires: gstreamer0.10-plugins-base >= %gstver
 Requires: gstreamer0.10-plugins-good
@@ -168,7 +168,7 @@ Totem is simple movie player for the GNOME desktop. It
 features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
 
-This is the Widget library based on xine shared among the totem
+This is the Widget library based on gstreamer shared among the totem
 components.
 %endif
 
