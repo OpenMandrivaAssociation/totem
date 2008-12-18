@@ -21,8 +21,8 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.24.3
-Release: %mkrel 2
+Version: 2.25.3
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw from Fedora:
@@ -321,7 +321,7 @@ update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstr
 %_sysconfdir/gconf/schemas/totem-handlers.schemas
 %_sysconfdir/gconf/schemas/totem-video-thumbnail.schemas
 %dir %_datadir/omf/totem/
-%_datadir/icons/hicolor/*/apps/*
+%_datadir/icons/hicolor/*/*/*
 %_datadir/omf/totem/totem-C.omf
 %_datadir/totem
 %_datadir/applications/totem.desktop
