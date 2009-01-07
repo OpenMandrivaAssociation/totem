@@ -76,6 +76,7 @@ This version is based on the xine backend.
 %package common
 Summary: Common data files for totem 
 Group:	Video
+Requires: gnome-python-gconf
 Requires: pygtk2.0
 Requires: iso-codes
 Requires: python-gdata
