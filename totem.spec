@@ -22,7 +22,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.25.3
-Release: %mkrel 2
+Release: %mkrel 3
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw from Fedora:
@@ -79,7 +79,10 @@ Group:	Video
 Requires: gnome-python-gconf
 Requires: pygtk2.0
 Requires: iso-codes
+#gw youtube plugin:
 Requires: python-gdata
+#gw opensubtitles plugin:
+Requires: pyxdg
 Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
 Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
 
@@ -110,6 +113,8 @@ Group:	Video
 Requires: %libnamegstreamer = %{version}-%{release}
 Requires: %name-common = %version
 Provides: totem
+#gw youtube plugin:
+Requires: gstreamer0.10-python
 
 %description gstreamer
 Totem is simple movie player for the GNOME desktop. It
@@ -327,7 +332,7 @@ update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstr
 %_datadir/totem
 %_datadir/applications/totem.desktop
 %dir %_libdir/totem
-%_libdir/totem/plugins
+%_libdir/totem/plugins/
 %_libdir/totem/totem-bugreport.py
 %_mandir/man1/*
 %{_iconsdir}/%name.png
