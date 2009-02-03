@@ -21,15 +21,13 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.25.3
-Release: %mkrel 4
+Version: 2.25.90
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/totem/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw from Fedora:
 # http://cvs.fedoraproject.org/viewcvs/rpms/totem/devel/totem-bin-backend-ondemand.sh
 Source2: totem-bin-backend-ondemand.sh
-# https://qa.mandriva.com/show_bug.cgi?id=46932
-Patch: totem-fix-video-property-setting.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -182,7 +180,6 @@ components.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 #gw else libthumbnail.la does not build
@@ -249,8 +246,8 @@ EOF
 install -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}-backend
 
 %find_lang %name --with-gnome
-for omf in %buildroot%_datadir/omf/%name/%name-??*.omf;do 
-echo "%lang($(basename $omf|sed -e s/%name-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
+for omf in %buildroot%_datadir/omf/*/*-??*.omf;do 
+echo "%lang($(basename $omf|sed -e s/.*-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
 done
 
 #menu
