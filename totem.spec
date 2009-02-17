@@ -21,15 +21,13 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.25.90
-Release: %mkrel 2
+Version: 2.25.91
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw from Fedora:
 # http://cvs.fedoraproject.org/viewcvs/rpms/totem/devel/totem-bin-backend-ondemand.sh
 Source2: totem-bin-backend-ondemand.sh
-# http://bugzilla.gnome.org/show_bug.cgi?id=571480
-Patch: totem-r5970-fix-crash.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -182,7 +180,6 @@ components.
 
 %prep
 %setup -q
-%patch -p0
 
 %build
 #gw else libthumbnail.la does not build
@@ -334,6 +331,7 @@ update-alternatives --remove totem-mozilla %_libexecdir/totem-plugin-viewer-gstr
 %_datadir/omf/totem/totem-C.omf
 %_datadir/totem
 %_datadir/applications/totem.desktop
+%_datadir/gtk-doc/html/%name
 %dir %_libdir/totem
 %_libdir/totem/plugins/
 %_libdir/totem/totem-bugreport.py
