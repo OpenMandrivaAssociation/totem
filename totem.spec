@@ -10,7 +10,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.27.1
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPLv2 with exception
@@ -46,6 +46,8 @@ BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
 BuildRequires: libtotem-plparser-devel >= 2.27.0
 BuildRequires: unique-devel
+#gw youtube plugin:
+BuildRequires: libgdata-devel
 Requires: gnome-python-gconf
 Requires: pygtk2.0
 Requires: iso-codes
@@ -174,7 +176,30 @@ rm -rf $RPM_BUILD_ROOT
 %_datadir/applications/totem.desktop
 %_datadir/gtk-doc/html/%name
 %dir %_libdir/totem
-%_libdir/totem/plugins/
+%dir %_libdir/totem/plugins/
+%_libdir/totem/plugins/bemused
+%_libdir/totem/plugins/brasero-disc-recorder
+%_libdir/totem/plugins/coherence_upnp
+%_libdir/totem/plugins/dbus
+%_libdir/totem/plugins/galago
+%_libdir/totem/plugins/gromit
+%_libdir/totem/plugins/iplayer
+%_libdir/totem/plugins/jamendo
+%_libdir/totem/plugins/lirc
+%_libdir/totem/plugins/media-player-keys
+%_libdir/totem/plugins/ontop
+%_libdir/totem/plugins/opensubtitles
+%_libdir/totem/plugins/properties
+%_libdir/totem/plugins/publish
+%_libdir/totem/plugins/pythonconsole
+%_libdir/totem/plugins/sample-vala
+%_libdir/totem/plugins/screensaver
+%_libdir/totem/plugins/screenshot
+%_libdir/totem/plugins/skipto
+%_libdir/totem/plugins/thumbnail
+%_libdir/totem/plugins/totem
+#%_libdir/totem/plugins/tracker
+%_libdir/totem/plugins/youtube
 %_libdir/totem/totem-bugreport.py
 %_mandir/man1/*
 %{_iconsdir}/%name.png
