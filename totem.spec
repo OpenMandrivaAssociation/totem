@@ -26,6 +26,7 @@ BuildRequires: libxxf86vm-devel
 BuildRequires: libnvtvsimple-devel
 BuildRequires: scrollkeeper
 BuildRequires: gnome-doc-utils
+BuildRequires: docbook-dtd45-xml
 BuildRequires: liblirc-devel
 BuildRequires: libnautilus-devel
 BuildRequires: libgalago-devel
