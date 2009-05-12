@@ -10,7 +10,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.27.1
-Release: %mkrel 2
+Release: %mkrel 3
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPLv2 with exception
@@ -55,6 +55,8 @@ Requires: gstreamer0.10-plugins-base >= %gstver
 Requires: gstreamer0.10-plugins-good
 #gw opensubtitles plugin:
 Requires: pyxdg
+#gw does not work yet:
+#Requires: python-coherence
 Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
 Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
 Provides: %name-common %name-gstreamer %name-xine
@@ -71,7 +73,6 @@ controls, as well as a pretty complete keyboard navigation.
 Summary: Totem video plugin for Mozilla Firefox
 Group: Networking/WWW
 BuildRequires: dbus-devel >= 0.35
-Requires: totem-common = %version
 Obsoletes: totem-mozilla-gstreamer
 Provides: totem-mozilla-gstreamer
 
