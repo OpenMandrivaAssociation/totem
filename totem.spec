@@ -10,7 +10,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.27.1
-Release: %mkrel 3
+Release: %mkrel 4
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPLv2 with exception
@@ -57,6 +57,8 @@ Requires: gstreamer0.10-plugins-good
 Requires: pyxdg
 #gw does not work yet:
 #Requires: python-coherence
+#gw needed by the iplayer plugin
+Requires: python-httplib2
 Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
 Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
 Provides: %name-common %name-gstreamer %name-xine
