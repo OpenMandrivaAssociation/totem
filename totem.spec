@@ -30,7 +30,7 @@ BuildRequires: docbook-dtd45-xml
 BuildRequires: liblirc-devel
 BuildRequires: libnautilus-devel
 BuildRequires: libgalago-devel
-BuildRequires: libvala-devel >= 0.1.5
+#BuildRequires: libvala-devel >= 0.1.5
 BuildRequires: libbluez-devel
 BuildRequires: libepc-devel
 BuildRequires: hal-devel
@@ -199,7 +199,7 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/totem/plugins/properties
 %_libdir/totem/plugins/publish
 %_libdir/totem/plugins/pythonconsole
-%_libdir/totem/plugins/sample-vala
+#%_libdir/totem/plugins/sample-vala
 %_libdir/totem/plugins/screensaver
 %_libdir/totem/plugins/screenshot
 %_libdir/totem/plugins/skipto
