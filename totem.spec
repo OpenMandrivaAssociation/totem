@@ -10,7 +10,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.27.1
-Release: %mkrel 6
+Release: %mkrel 7
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPLv2 with exception
@@ -80,6 +80,7 @@ Group: Networking/WWW
 BuildRequires: dbus-devel >= 0.35
 Obsoletes: totem-mozilla-gstreamer
 Provides: totem-mozilla-gstreamer
+Requires: %name = %version-%release
 
 %description mozilla
 This embeds the Totem video player into web browsers based on Mozilla Firefox.
