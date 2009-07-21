@@ -13,6 +13,8 @@ Version: 2.27.1
 Release: %mkrel 8
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
+Patch: totem-libgdata-0.4.0.patch
+Patch1: totem-libgdata-0.4.0-part2.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -97,6 +99,8 @@ files in the properties dialogue.
 
 %prep
 %setup -q
+%patch -p1
+%patch1 -p1
 
 %build
 #gw else libthumbnail.la does not build
