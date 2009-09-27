@@ -10,7 +10,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.28.0
-Release: %mkrel 2
+Release: %mkrel 3
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 License: GPLv2 with exception
@@ -23,7 +23,9 @@ BuildRequires: gstreamer0.10-plugins-base
 BuildRequires: libxdmcp-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxxf86vm-devel
+%ifarch %{ix86} x86_64
 BuildRequires: libnvtvsimple-devel
+%endif
 BuildRequires: scrollkeeper
 BuildRequires: gnome-doc-utils
 BuildRequires: docbook-dtd45-xml
