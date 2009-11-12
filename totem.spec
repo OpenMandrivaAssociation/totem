@@ -16,6 +16,9 @@ Source1: %name-48.png
 #gw work around crash in goom by using goom2k1 instead
 #https://qa.mandriva.com/show_bug.cgi?id=53140
 Patch: totem-2.28.1-set-default-visual-effects-plugin.patch
+#gw volume setting patches for bug #55545
+Patch1: totem-65f1f448d2b900b51c7d5b99a654e338c9d3b65f.patch
+Patch2: totem-0bcad1be6067cb6dda40d03dc52a14652a2e1dc5.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -105,6 +108,8 @@ files in the properties dialogue.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure2_5x --disable-run-in-source-tree \
