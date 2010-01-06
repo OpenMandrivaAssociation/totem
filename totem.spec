@@ -97,7 +97,9 @@ This embeds the Totem video player into web browsers based on Mozilla Firefox.
 %package nautilus
 Group:Video
 Summary: Video and Audio Properties tab for Nautilus
-Requires: %name-common = %version
+#gw just for the translations:
+Requires: %name = %version-%release
+Requires: nautilus
 
 %description nautilus
 A Nautilus extension that shows the properties of audio and video
