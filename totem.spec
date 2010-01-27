@@ -1,6 +1,6 @@
 %define build_mozilla 1
 
-%define gstver 0.10.23.2
+%define gstver 0.10.25.1
 
 %define backend_suffix %{nil}
 %if %_lib != lib
@@ -9,14 +9,13 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.28.5
+Version: 2.29.4
 Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw work around crash in goom by using goom2k1 instead
 #https://qa.mandriva.com/show_bug.cgi?id=53140
 Patch: totem-2.28.1-set-default-visual-effects-plugin.patch
-Patch2: totem-0bcad1be6067cb6dda40d03dc52a14652a2e1dc5.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
@@ -51,7 +50,7 @@ BuildRequires: shared-mime-info >= 0.22
 BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
-BuildRequires: libtotem-plparser-devel >= 2.27.0
+BuildRequires: libtotem-plparser-devel >= 2.29.1
 BuildRequires: unique-devel
 #gw youtube plugin:
 BuildRequires: libgdata-devel
@@ -108,7 +107,6 @@ files in the properties dialogue.
 %prep
 %setup -q
 %patch -p1
-%patch2 -p1
 
 %build
 %configure2_5x --disable-run-in-source-tree \
