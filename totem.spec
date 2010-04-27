@@ -1,6 +1,6 @@
 %define build_mozilla 1
 
-%define gstver 0.10.25.1
+%define gstver 0.10.28.1
 
 %define backend_suffix %{nil}
 %if %_lib != lib
@@ -9,24 +9,23 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.30.0
-Release: %mkrel 2
+Version: 2.30.1
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #gw work around crash in goom by using goom2k1 instead
 #https://qa.mandriva.com/show_bug.cgi?id=53140
 Patch9: totem-2.28.1-set-default-visual-effects-plugin.patch
-# gw fix youtube support
-# https://bugzilla.gnome.org/show_bug.cgi?id=614679
-Patch1: totem-fix-youtube-support.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 URL: http://www.hadess.net/totem.php3
-BuildRequires: libgstreamer-plugins-base-devel >= %gstver
+BuildRequires: libgstreamer-plugins-base-devel >= 0.10.26
+BuildRequires: libgstreamer-devel >= %gstver
 BuildRequires: gstreamer0.10-plugins-good
 BuildRequires: gstreamer0.10-plugins-base
 BuildRequires: gstreamer0.10-soup
+BuildRequires: libtracker-devel
 BuildRequires: libxdmcp-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxxf86vm-devel
@@ -107,8 +106,18 @@ Requires: nautilus
 A Nautilus extension that shows the properties of audio and video
 files in the properties dialogue.
 
-%prep
-%setup -q
+%package tracker
+Group:Video
+Summary: Tracker search plugin for totem
+Requires: %name = %version-%release
+Requires: tracker
+
+%description tracker
+This is a totem plugin that uses the tracker desktop search for videos
+on the local machine.  
+
+%prep 
+%setup -q 
 %apply_patches
 
 %build
@@ -215,7 +224,6 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/totem/plugins/skipto
 %_libdir/totem/plugins/thumbnail
 %_libdir/totem/plugins/totem
-#%_libdir/totem/plugins/tracker
 %_libdir/totem/plugins/youtube
 %_libdir/totem/totem-bugreport.py
 %_mandir/man1/*
@@ -233,6 +241,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %_libdir/nautilus/extensions-2.0/*
 
+%files tracker
+%defattr(-,root,root)
+%_libdir/totem/plugins/tracker
 
 %if %build_mozilla
 %files mozilla
