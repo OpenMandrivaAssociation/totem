@@ -25,7 +25,7 @@ BuildRequires: libgstreamer-devel >= %gstver
 BuildRequires: gstreamer0.10-plugins-good
 BuildRequires: gstreamer0.10-plugins-base
 BuildRequires: gstreamer0.10-soup
-BuildRequires: libtracker-devel
+BuildRequires: tracker-devel
 BuildRequires: libxdmcp-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxxf86vm-devel
