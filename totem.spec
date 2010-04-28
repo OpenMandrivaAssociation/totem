@@ -1,6 +1,7 @@
 %define build_mozilla 1
 
 %define gstver 0.10.28.1
+%define gstpbver 0.10.26
 
 %define backend_suffix %{nil}
 %if %_lib != lib
@@ -20,7 +21,7 @@ License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 URL: http://www.hadess.net/totem.php3
-BuildRequires: libgstreamer-plugins-base-devel >= 0.10.26
+BuildRequires: libgstreamer-plugins-base-devel >= %gstpbver
 BuildRequires: libgstreamer-devel >= %gstver
 BuildRequires: gstreamer0.10-plugins-good
 BuildRequires: gstreamer0.10-plugins-base
@@ -59,7 +60,7 @@ BuildRequires: libgdata-devel
 Requires: gnome-python-gconf
 Requires: pygtk2.0
 Requires: iso-codes
-Requires: gstreamer0.10-plugins-base >= %gstver
+Requires: gstreamer0.10-plugins-base >= %gstpbver
 Requires: gstreamer0.10-plugins-good
 Requires: gstreamer0.10-soup
 #gw opensubtitles plugin:
