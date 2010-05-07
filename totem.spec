@@ -11,7 +11,7 @@
 Summary: Movie player for GNOME 2
 Name: totem
 Version: 2.30.1
-Release: %mkrel 2
+Release: %mkrel 3
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
@@ -159,8 +159,8 @@ install -D -m 644 data/icons/32x32/totem.png $RPM_BUILD_ROOT%{_iconsdir}/%name.p
 install -D -m 644 %{SOURCE1} %buildroot/%_liconsdir/%name.png
 
 #(nl) KDE Solid integration
-mkdir -p %buildroot/%_datadir/apps/solid
-install -D -m 644 %{SOURCE2} $RPM_BUILD_ROOT%_datadir/apps/solid
+mkdir -p %buildroot/%_datadir/apps/solid/actions
+install -D -m 644 %{SOURCE2} $RPM_BUILD_ROOT%_datadir/apps/solid/actions/
 
 # remove unpackaged files
 rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper
@@ -207,7 +207,7 @@ rm -rf $RPM_BUILD_ROOT
 %_datadir/totem
 %_datadir/applications/totem.desktop
 %_datadir/gtk-doc/html/%name
-%_datadir/apps/solid/totem-opendvd.desktop
+%_datadir/apps/solid/actions/totem-opendvd.desktop
 %dir %_libdir/totem
 %dir %_libdir/totem/plugins/
 %_libdir/totem/plugins/bemused
