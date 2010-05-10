@@ -19,6 +19,8 @@ Source2: totem-opendvd.desktop
 #gw work around crash in goom by using goom2k1 instead
 #https://qa.mandriva.com/show_bug.cgi?id=53140
 Patch9: totem-2.28.1-set-default-visual-effects-plugin.patch
+# (fc) 2.30.1-5mdv various bug fixes (GIT)
+Patch10: totem-2.30.1-gitfixes.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
