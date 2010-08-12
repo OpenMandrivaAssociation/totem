@@ -10,8 +10,8 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.30.2
-Release: %mkrel 3
+Version: 2.31.6
+Release: %mkrel 1
 Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
 Source1: %name-48.png
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
@@ -56,7 +56,6 @@ BuildRequires: libgnome-window-settings-devel
 BuildRequires: pygtk2.0-devel
 BuildRequires: gtk2-devel >= 2.12.1
 BuildRequires: libtotem-plparser-devel >= 2.29.1
-BuildRequires: unique-devel
 #gw youtube plugin:
 BuildRequires: libgdata-devel
 Requires: gnome-python-gconf
