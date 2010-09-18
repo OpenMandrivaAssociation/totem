@@ -32,6 +32,7 @@ BuildRequires: tracker-devel
 BuildRequires: libxdmcp-devel
 BuildRequires: libxtst-devel
 BuildRequires: libxxf86vm-devel
+BuildRequires: unique-devel
 %ifarch %{ix86} x86_64
 BuildRequires: libnvtvsimple-devel
 %endif
