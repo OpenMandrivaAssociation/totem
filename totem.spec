@@ -22,7 +22,7 @@ Patch9: totem-2.28.1-set-default-visual-effects-plugin.patch
 License: GPLv2 with exception
 Group: Video
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
-URL: http://www.hadess.net/totem.php3
+URL: http://projects.gnome.org/totem/
 BuildRequires: libgstreamer-plugins-base-devel >= %gstpbver
 BuildRequires: libgstreamer-devel >= %gstver
 BuildRequires: gstreamer0.10-plugins-good
