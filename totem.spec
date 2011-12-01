@@ -137,7 +137,7 @@ on the local machine.
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT %name.lang
+rm -rf %{buildroot} %name.lang
 GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
 
 %find_lang %name --with-gnome
@@ -151,22 +151,22 @@ desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="X-MandrivaLinux-Multimedia-Video" \
   --add-category="X-MandrivaLinux-CrossDesktop" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 #icons
 mkdir -p %buildroot{%_liconsdir,%_miconsdir,%_iconsdir}
 mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps
-install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_iconsdir}/hicolor/48x48/apps/%name.png
-install -D -m 644 data/icons/16x16/totem.png $RPM_BUILD_ROOT%{_miconsdir}/%name.png
-install -D -m 644 data/icons/32x32/totem.png $RPM_BUILD_ROOT%{_iconsdir}/%name.png
+install -D -m 644 %{SOURCE1} %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%name.png
+install -D -m 644 data/icons/16x16/totem.png %{buildroot}%{_miconsdir}/%name.png
+install -D -m 644 data/icons/32x32/totem.png %{buildroot}%{_iconsdir}/%name.png
 install -D -m 644 %{SOURCE1} %buildroot/%_liconsdir/%name.png
 
 #(nl) KDE Solid integration
 mkdir -p %buildroot/%_datadir/apps/solid/actions
-install -D -m 644 %{SOURCE2} $RPM_BUILD_ROOT%_datadir/apps/solid/actions/
+install -D -m 644 %{SOURCE2} %{buildroot}%_datadir/apps/solid/actions/
 
 # remove unpackaged files
-rm -rf $RPM_BUILD_ROOT%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper
+rm -rf %{buildroot}%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper
 
 
 #gw there is no devel package yet
@@ -175,7 +175,7 @@ rm -f %buildroot%_libdir/libbaconvideowidget.{a,la,so}
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %define schemas totem totem-video-thumbnail totem-handlers
