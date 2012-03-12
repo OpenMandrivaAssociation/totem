@@ -1,100 +1,89 @@
 %define build_mozilla 1
 
-%define gstver 0.10.28.1
-%define gstpbver 0.10.26
-
-%define backend_suffix %{nil}
-%if %_lib != lib
-%define backend_suffix -64
-%endif
+%define api			1.0
+%define major		0
+%define gir_major	1.0
+%define libname		%mklibname %{name} %{major}
+%define girname		%mklibname %{name}-gir %{gir_major}
+%define develname	%mklibname %{name} -d
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 2.32.0
-Release: %mkrel 5
-Source0: http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
-Source1: %name-48.png
-#(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
-Source2: totem-opendvd.desktop
-#gw work around crash in goom by using goom2k1 instead
-#https://qa.mandriva.com/show_bug.cgi?id=53140
-Patch9: totem-2.28.1-set-default-visual-effects-plugin.patch
+Version: 3.2.2
+Release: 1
 License: GPLv2 with exception
 Group: Video
-BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 URL: http://projects.gnome.org/totem/
-BuildRequires: libgstreamer-plugins-base-devel >= %gstpbver
-BuildRequires: libgstreamer-devel >= %gstver
-BuildRequires: gstreamer0.10-plugins-good
-BuildRequires: gstreamer0.10-plugins-base
-BuildRequires: gstreamer0.10-soup
-BuildRequires: tracker-devel
-BuildRequires: libsm-devel
-BuildRequires: libice-devel
-BuildRequires: libxdmcp-devel
-BuildRequires: libxtst-devel
-BuildRequires: libxxf86vm-devel
-BuildRequires: unique-devel
+Source0: http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
+#(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
+Source1: totem-opendvd.desktop
+
+BuildRequires:	docbook-dtd45-xml
+BuildRequires:	intltool
+BuildRequires:	gstreamer0.10-plugins-good
+BuildRequires:	gstreamer0.10-soup
+BuildRequires:	gstreamer0.10-tools
+BuildRequires:	gnome-common
+BuildRequires:	shared-mime-info
+BuildRequires:	desktop-file-utils
+BuildRequires:	vala-devel >= 0.14.1
+BuildRequires:	pkgconfig(bluez)
+BuildRequires:	pkgconfig(gtk-doc)
+BuildRequires:	pkgconfig(gnome-doc-utils)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
+BuildRequires:	pkgconfig(clutter-gst-1.0) >= 1.3.9
+BuildRequires:	pkgconfig(clutter-gtk-1.0)
+BuildRequires:	pkgconfig(grilo-0.1) >= 0.1.16
+BuildRequires:	pkgconfig(ice)
+BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
+BuildRequires:	pkgconfig(libgdata) >= 0.4.0
+BuildRequires:	pkgconfig(liblircclient0)
+BuildRequires:	pkgconfig(libnautilus-extension) >= 2.91.3
+BuildRequires:	pkgconfig(libpeas-gtk-1.0) >= 0.7.2
+BuildRequires:	pkgconfig(libproxy-1.0)
+BuildRequires:	pkgconfig(mx-1.0)
+BuildRequires:	pkgconfig(pygobject-3.0)
+BuildRequires:	pkgconfig(sm)
+BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
 %ifarch %{ix86} x86_64
-BuildRequires: libnvtvsimple-devel
+BuildRequires:	pkgconfig(nvtvsimple)
 %endif
-BuildRequires: scrollkeeper
-BuildRequires: gnome-doc-utils
-BuildRequires: docbook-dtd45-xml
-BuildRequires: liblirc-devel
-BuildRequires: libnautilus-devel
-BuildRequires: libgalago-devel
-BuildRequires: libvala-devel >= 0.1.5
-BuildRequires: libbluez-devel
-BuildRequires: libepc-devel
-BuildRequires: hal-devel
-BuildRequires: glib2-devel >= 2.9.6
-BuildRequires: iso-codes
-BuildRequires: intltool
-BuildRequires: automake1.9
-BuildRequires: gnome-common
-BuildRequires: desktop-file-utils
-BuildRequires: shared-mime-info >= 0.22
-BuildRequires: libgnome-window-settings-devel
-BuildRequires: pygtk2.0-devel
-BuildRequires: gtk2-devel >= 2.12.1
-BuildRequires: libtotem-plparser-devel >= 2.29.1
-#gw youtube plugin:
-BuildRequires: libgdata-devel
-Requires: gnome-python-gconf
-Requires: pygtk2.0
+
+Requires: grilo-plugins
 Requires: iso-codes
-Requires: gstreamer0.10-plugins-base >= %gstpbver
+Requires: gstreamer0.10-plugins-base
 Requires: gstreamer0.10-plugins-good
 Requires: gstreamer0.10-soup
+Suggests: gstreamer0.10-resindvd
+Suggests: gstreamer0.10-a52dec
+
 #gw opensubtitles plugin:
 Requires: pyxdg
+
 #gw does not work yet:
 #Requires: python-coherence
+
 #gw needed by the iplayer plugin
 Requires: python-httplib2
 Requires: python-feedparser
 Requires: python-beautifulsoup
-#
-Requires(post)  : scrollkeeper >= 0.3 desktop-file-utils
-Requires(postun): scrollkeeper >= 0.3 desktop-file-utils
-Provides: %name-common %name-gstreamer %name-xine
-Obsoletes: %name-common %name-gstreamer %name-xine
+
+Obsoletes: %{name}-tracker
 
 %description
 Totem is simple movie player for the GNOME desktop. It
 features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
 
-
-%if %build_mozilla
+%if %{build_mozilla}
 %package mozilla
 Summary: Totem video plugin for Mozilla Firefox
 Group: Networking/WWW
 BuildRequires: dbus-devel >= 0.35
 Obsoletes: totem-mozilla-gstreamer
 Provides: totem-mozilla-gstreamer
-Requires: %name = %version-%release
+Requires: %{name} = %{version}-%{release}
 
 %description mozilla
 This embeds the Totem video player into web browsers based on Mozilla Firefox.
@@ -104,161 +93,143 @@ This embeds the Totem video player into web browsers based on Mozilla Firefox.
 Group:Video
 Summary: Video and Audio Properties tab for Nautilus
 #gw just for the translations:
-Requires: %name = %version-%release
+Requires: %{name} = %{version}-%{release}
 Requires: nautilus
 
 %description nautilus
 A Nautilus extension that shows the properties of audio and video
 files in the properties dialogue.
 
-%package tracker
-Group:Video
-Summary: Tracker search plugin for totem
-Requires: %name = %version-%release
-Requires: tracker
+%package -n %{libname}
+Group: System/Libraries
+Summary: Shared libraries for %{name}
 
-%description tracker
-This is a totem plugin that uses the tracker desktop search for videos
-on the local machine.  
+%description -n %{libname}
+This package contains the shared libraries for %{name}.
+
+%package -n %{girname}
+Summary: GObject Introspection interface description for %{name}
+Group: System/Libraries
+Requires: %{libname} = %{version}-%{release}
+
+%description -n %{girname}
+GObject Introspection interface description for %{name}.
+
+%package -n %{develname}
+Group: Development/C
+Summary: Devel files for %{name}
+Requires: %{libname} = %{version}-%{release}
+Provides: %{name}-devel = %{version}-%{release}
+
+%description -n %{develname}
+Devel files for %{name}.
 
 %prep 
 %setup -q 
 %apply_patches
 
 %build
-%configure2_5x --disable-run-in-source-tree \
---enable-easy-codec-installation \
-%if %build_mozilla
---enable-browser-plugins \
+%configure2_5x \
+	--disable-static \
+	--disable-run-in-source-tree \
+	--enable-easy-codec-installation \
+%if %{build_mozilla}
+	--enable-browser-plugins \
 %else
---disable-browser-plugins \
+	--disable-browser-plugins \
 %endif
 
 %make
 
 %install
-rm -rf %{buildroot} %name.lang
-GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
-
-%find_lang %name --with-gnome
-for omf in %buildroot%_datadir/omf/*/*-??*.omf;do 
-echo "%lang($(basename $omf|sed -e s/.*-// -e s/.omf//)) $(echo $omf|sed -e s!%buildroot!!)" >> %name.lang
-done
+%makeinstall_std
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
+%find_lang %{name} --with-gnome
 
 #menu
 MIME_TYPES=`tr '\n' , < data/mime-type-list.txt | sed -e 's/,$//'`
 desktop-file-install --vendor="" \
-  --remove-category="Application" \
-  --add-category="X-MandrivaLinux-Multimedia-Video" \
-  --add-category="X-MandrivaLinux-CrossDesktop" \
-  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
-
-#icons
-mkdir -p %buildroot{%_liconsdir,%_miconsdir,%_iconsdir}
-mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps
-install -D -m 644 %{SOURCE1} %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%name.png
-install -D -m 644 data/icons/16x16/totem.png %{buildroot}%{_miconsdir}/%name.png
-install -D -m 644 data/icons/32x32/totem.png %{buildroot}%{_iconsdir}/%name.png
-install -D -m 644 %{SOURCE1} %buildroot/%_liconsdir/%name.png
+	--remove-category="Application" \
+	--add-category="X-MandrivaLinux-Multimedia-Video" \
+	--add-category="X-MandrivaLinux-CrossDesktop" \
+	--dir %{buildroot}%{_datadir}/applications \
+	%{buildroot}%{_datadir}/applications/*
 
 #(nl) KDE Solid integration
-mkdir -p %buildroot/%_datadir/apps/solid/actions
-install -D -m 644 %{SOURCE2} %{buildroot}%_datadir/apps/solid/actions/
+mkdir -p %{buildroot}/%{_datadir}/apps/solid/actions
+install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 
-# remove unpackaged files
-rm -rf %{buildroot}%{_libdir}/{totem/plugins/*/,mozilla/plugins,nautilus/extensions-2.0}/*.{la,a} %buildroot/var/lib/scrollkeeper
-
-
-#gw there is no devel package yet
-rm -f %buildroot%_libdir/libbaconvideowidget.{a,la,so}
-
-
-
-%clean
-rm -rf %{buildroot}
-
-%post
-%define schemas totem totem-video-thumbnail totem-handlers
-%if %mdkversion < 200900
-%post_install_gconf_schemas %schemas
-%update_icon_cache hicolor
-%update_desktop_database
-%update_menus
-%update_scrollkeeper
-%endif
-
-%preun
-%preun_uninstall_gconf_schemas %schemas
-
-%postun
-%if %mdkversion < 200900
-%clean_scrollkeeper
-%clean_icon_cache hicolor
-%clean_desktop_database
-%clean_menus
-%endif
-
-%files -f %name.lang
-%defattr(-,root,root)
+%files -f %{name}.lang
 %doc README AUTHORS TODO NEWS
-%_sysconfdir/gconf/schemas/totem.schemas
-%_sysconfdir/gconf/schemas/totem-handlers.schemas
-%_sysconfdir/gconf/schemas/totem-video-thumbnail.schemas
-%dir %_datadir/omf/totem/
-%_datadir/icons/hicolor/*/*/*
-%_datadir/omf/totem/totem-C.omf
-%_datadir/totem
-%_datadir/applications/totem.desktop
-%_datadir/gtk-doc/html/%name
-%_datadir/apps/solid/actions/totem-opendvd.desktop
-%dir %_libdir/totem
-%dir %_libdir/totem/plugins/
-%_libdir/totem/plugins/bemused
-%_libdir/totem/plugins/brasero-disc-recorder
-%_libdir/totem/plugins/chapters
-%_libdir/totem/plugins/coherence_upnp
-%_libdir/totem/plugins/dbus
-%_libdir/totem/plugins/galago
-%_libdir/totem/plugins/gromit
-%_libdir/totem/plugins/iplayer
-%_libdir/totem/plugins/jamendo
-%_libdir/totem/plugins/lirc
-%_libdir/totem/plugins/media-player-keys
-%_libdir/totem/plugins/ontop
-%_libdir/totem/plugins/opensubtitles
-%_libdir/totem/plugins/properties
-%_libdir/totem/plugins/publish
-%_libdir/totem/plugins/pythonconsole
-%_libdir/totem/plugins/sample-vala
-%_libdir/totem/plugins/screensaver
-%_libdir/totem/plugins/screenshot
-%_libdir/totem/plugins/skipto
-%_libdir/totem/plugins/thumbnail
-%_libdir/totem/plugins/totem
-%_libdir/totem/plugins/youtube
-%_libdir/totem/totem-bugreport.py
-%_mandir/man1/*
-%{_iconsdir}/%name.png
-%{_miconsdir}/%name.png
-%{_liconsdir}/%name.png
-%defattr(-,root,root)
-%_bindir/totem
-%_bindir/totem-audio-preview
-%_bindir/totem-video-indexer
-%_bindir/totem-video-thumbnailer
-
+%{_bindir}/totem
+%{_bindir}/totem-audio-preview
+%{_bindir}/totem-video-thumbnailer
+%dir %{_libdir}/totem
+%dir %{_libdir}/totem/plugins/
+%dir %{_libdir}/totem/plugins/grilo
+%dir %{_libdir}/totem/plugins/im-status
+%dir %{_libdir}/totem/plugins/save-file
+%{_libdir}/totem/plugins/bemused
+%{_libdir}/totem/plugins/brasero-disc-recorder
+%{_libdir}/totem/plugins/chapters
+%{_libdir}/totem/plugins/dbus
+%{_libdir}/totem/plugins/gromit
+%{_libdir}/totem/plugins/iplayer
+%{_libdir}/totem/plugins/lirc
+%{_libdir}/totem/plugins/media-player-keys
+%{_libdir}/totem/plugins/ontop
+%{_libdir}/totem/plugins/opensubtitles
+%{_libdir}/totem/plugins/properties
+%{_libdir}/totem/plugins/publish
+%{_libdir}/totem/plugins/pythonconsole
+%{_libdir}/totem/plugins/screensaver
+%{_libdir}/totem/plugins/screenshot
+%{_libdir}/totem/plugins/skipto
+%{_libdir}/totem/plugins/youtube
+%{_libdir}/totem/totem-bugreport.py
+%{_libdir}/totem/plugins/grilo/grilo.plugin
+%{_libdir}/totem/plugins/grilo/grilo.ui
+%{_libdir}/totem/plugins/grilo/libgrilo.so
+%{_libdir}/totem/plugins/grilo/totem-grilo.conf
+%{_libdir}/totem/plugins/im-status/libtotem-im-status.so
+%{_libdir}/totem/plugins/im-status/totem-im-status.plugin
+%{_libdir}/totem/plugins/save-file/libsave-file.so
+%{_libdir}/totem/plugins/save-file/save-file.plugin
+%{_datadir}/applications/totem.desktop
+%{_datadir}/apps/solid/actions/totem-opendvd.desktop
+%{_datadir}/GConf/gsettings/opensubtitles.convert
+%{_datadir}/GConf/gsettings/publish.convert
+%{_datadir}/GConf/gsettings/pythonconsole.convert
+%{_datadir}/GConf/gsettings/totem.convert
+%{_datadir}/glib-2.0/schemas/org.gnome.totem.enums.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.totem.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.totem.plugins.publish.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
+%{_datadir}/icons/hicolor/*/*/*
+%{_datadir}/thumbnailers/totem.thumbnailer
+%{_datadir}/totem
+%{_mandir}/man1/*
 
 %files nautilus
-%defattr(-,root,root)
-%_libdir/nautilus/extensions-2.0/*
+%{_libdir}/nautilus/extensions-3.0/*
 
-%files tracker
-%defattr(-,root,root)
-%_libdir/totem/plugins/tracker
-
-%if %build_mozilla
+%if %{build_mozilla}
 %files mozilla
-%defattr(-,root,root)
-%_libdir/mozilla/plugins/libtotem*.so
-%_libexecdir/totem-plugin-viewer
+%{_libdir}/mozilla/plugins/libtotem*.so
+%{_libexecdir}/totem-plugin-viewer
 %endif
+
+%files -n %{libname}
+%{_libdir}/libtotem.so.%{major}*
+
+%files -n %{girname}
+%{_libdir}/girepository-1.0/Totem-1.0.typelib
+
+%files -n %{develname}
+%doc %{_datadir}/gtk-doc/html/%{name}
+%{_libdir}/libtotem.so
+%{_libdir}/pkgconfig/totem.pc
+%{_includedir}/totem/%{api}/*
+%{_datadir}/gir-1.0/Totem-1.0.gir
+
