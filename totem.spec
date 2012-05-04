@@ -27,6 +27,7 @@ BuildRequires:	gnome-common
 BuildRequires:	intltool
 #BuildRequires:	pylint
 BuildRequires:	shared-mime-info
+BuildRequires:	vala
 BuildRequires:	vala-devel
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(gtk-doc)
