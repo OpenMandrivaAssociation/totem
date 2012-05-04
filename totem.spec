@@ -9,7 +9,7 @@
 
 Summary: Movie player for GNOME 2
 Name: totem
-Version: 3.2.2
+Version: 3.4.1
 Release: 1
 License: GPLv2 with exception
 Group: Video
@@ -18,15 +18,16 @@ Source0: http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.x
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1: totem-opendvd.desktop
 
+BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd45-xml
-BuildRequires:	intltool
 BuildRequires:	gstreamer0.10-plugins-good
 BuildRequires:	gstreamer0.10-soup
 BuildRequires:	gstreamer0.10-tools
 BuildRequires:	gnome-common
+BuildRequires:	intltool
+BuildRequires:	pylint
 BuildRequires:	shared-mime-info
-BuildRequires:	desktop-file-utils
-BuildRequires:	vala-devel >= 0.14.1
+BuildRequires:	vala-devel
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(gnome-doc-utils)
@@ -132,6 +133,7 @@ Devel files for %{name}.
 %configure2_5x \
 	--disable-static \
 	--disable-run-in-source-tree \
+	--disable-vegas-plugin \
 	--enable-easy-codec-installation \
 %if %{build_mozilla}
 	--enable-browser-plugins \
@@ -185,7 +187,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screensaver
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
-%{_libdir}/totem/plugins/youtube
 %{_libdir}/totem/totem-bugreport.py
 %{_libdir}/totem/plugins/grilo/grilo.plugin
 %{_libdir}/totem/plugins/grilo/grilo.ui
