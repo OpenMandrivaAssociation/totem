@@ -25,7 +25,7 @@ BuildRequires:	gstreamer0.10-soup
 BuildRequires:	gstreamer0.10-tools
 BuildRequires:	gnome-common
 BuildRequires:	intltool
-BuildRequires:	pylint
+#BuildRequires:	pylint
 BuildRequires:	shared-mime-info
 BuildRequires:	vala-devel
 BuildRequires:	pkgconfig(bluez)
