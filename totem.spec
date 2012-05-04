@@ -171,11 +171,12 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %dir %{_libdir}/totem/plugins/grilo
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
-%{_libdir}/totem/plugins/bemused
 %{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/chapters
 %{_libdir}/totem/plugins/dbus
+%{_libdir}/totem/plugins/grilo
 %{_libdir}/totem/plugins/gromit
+%{_libdir}/totem/plugins/im-status
 %{_libdir}/totem/plugins/iplayer
 %{_libdir}/totem/plugins/lirc
 %{_libdir}/totem/plugins/media-player-keys
@@ -184,29 +185,16 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/properties
 %{_libdir}/totem/plugins/publish
 %{_libdir}/totem/plugins/pythonconsole
+%{_libdir}/totem/plugins/rotation
+%{_libdir}/totem/plugins/save-file
 %{_libdir}/totem/plugins/screensaver
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
 %{_libdir}/totem/totem-bugreport.py
-%{_libdir}/totem/plugins/grilo/grilo.plugin
-%{_libdir}/totem/plugins/grilo/grilo.ui
-%{_libdir}/totem/plugins/grilo/libgrilo.so
-%{_libdir}/totem/plugins/grilo/totem-grilo.conf
-%{_libdir}/totem/plugins/im-status/libtotem-im-status.so
-%{_libdir}/totem/plugins/im-status/totem-im-status.plugin
-%{_libdir}/totem/plugins/save-file/libsave-file.so
-%{_libdir}/totem/plugins/save-file/save-file.plugin
 %{_datadir}/applications/totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
-%{_datadir}/GConf/gsettings/opensubtitles.convert
-%{_datadir}/GConf/gsettings/publish.convert
-%{_datadir}/GConf/gsettings/pythonconsole.convert
-%{_datadir}/GConf/gsettings/totem.convert
-%{_datadir}/glib-2.0/schemas/org.gnome.totem.enums.xml
-%{_datadir}/glib-2.0/schemas/org.gnome.totem.gschema.xml
-%{_datadir}/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
-%{_datadir}/glib-2.0/schemas/org.gnome.totem.plugins.publish.gschema.xml
-%{_datadir}/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
+%{_datadir}/GConf/gsettings/*.convert
+%{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/thumbnailers/totem.thumbnailer
 %{_datadir}/totem
