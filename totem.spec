@@ -62,9 +62,9 @@ Suggests: gstreamer0.10-a52dec
 
 #gw opensubtitles plugin:
 Requires: pyxdg
-
-#gw does not work yet:
-#Requires: python-coherence
+# python plugins
+Requires: python-dbus
+Requires: python-gi
 
 #gw needed by the iplayer plugin
 Requires: python-httplib2
