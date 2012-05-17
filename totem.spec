@@ -1,10 +1,10 @@
 %define build_mozilla 1
 
-%define api			1.0
+%define api		1.0
 %define major		0
-%define gir_major	1.0
+%define girmajor	1.0
 %define libname		%mklibname %{name} %{major}
-%define girname		%mklibname %{name}-gir %{gir_major}
+%define girname		%mklibname %{name}-gir %{girmajor}
 %define develname	%mklibname %{name} -d
 
 Summary: Movie player for GNOME 2
@@ -26,7 +26,6 @@ BuildRequires:	gstreamer0.10-tools
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 #BuildRequires:	pylint
-BuildRequires:	shared-mime-info
 BuildRequires:	vala
 BuildRequires:	vala-devel
 BuildRequires:	pkgconfig(bluez)
@@ -46,6 +45,7 @@ BuildRequires:	pkgconfig(libpeas-gtk-1.0) >= 0.7.2
 BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(mx-1.0)
 BuildRequires:	pkgconfig(pygobject-3.0)
+BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
 %ifarch %{ix86} x86_64
@@ -112,7 +112,6 @@ This package contains the shared libraries for %{name}.
 %package -n %{girname}
 Summary: GObject Introspection interface description for %{name}
 Group: System/Libraries
-Requires: %{libname} = %{version}-%{release}
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
