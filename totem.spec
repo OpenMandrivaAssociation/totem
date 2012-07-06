@@ -1,22 +1,21 @@
 %define build_mozilla 1
 
-%define api		1.0
-%define major		0
-%define girmajor	1.0
-%define libname		%mklibname %{name} %{major}
-%define girname		%mklibname %{name}-gir %{girmajor}
-%define develname	%mklibname %{name} -d
+%define api	1.0
+%define major	0
+%define libname	%mklibname %{name} %{major}
+%define girname	%mklibname %{name}-gir %{api}
+%define devname	%mklibname %{name} -d
 
-Summary: Movie player for GNOME 2
-Name: totem
-Version: 3.4.3
-Release: 1
-License: GPLv2 with exception
-Group: Video
-URL: http://projects.gnome.org/totem/
-Source0: http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
+Summary:	Movie player for GNOME
+Name:		totem
+Version:	3.4.3
+Release:	1
+License:	GPLv2
+Group:		Video
+URL:		http://projects.gnome.org/totem/
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
-Source1: totem-opendvd.desktop
+Source1:	totem-opendvd.desktop
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd45-xml
@@ -80,49 +79,48 @@ controls, as well as a pretty complete keyboard navigation.
 
 %if %{build_mozilla}
 %package mozilla
-Summary: Totem video plugin for Mozilla Firefox
-Group: Networking/WWW
-BuildRequires: dbus-devel >= 0.35
-Obsoletes: totem-mozilla-gstreamer
-Provides: totem-mozilla-gstreamer
-Requires: %{name} = %{version}-%{release}
+Summary:	Totem video plugin for Mozilla Firefox
+Group:		Networking/WWW
+BuildRequires:	dbus-devel >= 0.35
+Requires:	%{name} = %{version}-%{release}
+%rename		totem-mozilla-gstreamer
 
 %description mozilla
 This embeds the Totem video player into web browsers based on Mozilla Firefox.
 %endif
 
 %package nautilus
-Group:Video
-Summary: Video and Audio Properties tab for Nautilus
+Summary:	Video and Audio Properties tab for Nautilus
+Group:		Video
 #gw just for the translations:
-Requires: %{name} = %{version}-%{release}
-Requires: nautilus
+Requires:	%{name} = %{version}-%{release}
+Requires:	nautilus
 
 %description nautilus
 A Nautilus extension that shows the properties of audio and video
 files in the properties dialogue.
 
 %package -n %{libname}
-Group: System/Libraries
-Summary: Shared libraries for %{name}
+Summary:	Shared libraries for %{name}
+Group:		System/Libraries
 
 %description -n %{libname}
 This package contains the shared libraries for %{name}.
 
 %package -n %{girname}
-Summary: GObject Introspection interface description for %{name}
-Group: System/Libraries
+Summary:	GObject Introspection interface description for %{name}
+Group:		System/Libraries
 
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
 
-%package -n %{develname}
-Group: Development/C
-Summary: Devel files for %{name}
-Requires: %{libname} = %{version}-%{release}
-Provides: %{name}-devel = %{version}-%{release}
+%package -n %{devname}
+Group:		Development/C
+Summary:	Devel files for %{name}
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %{develname}
+%description -n %{devname}
 Devel files for %{name}.
 
 %prep 
@@ -215,7 +213,7 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %files -n %{girname}
 %{_libdir}/girepository-1.0/Totem-1.0.typelib
 
-%files -n %{develname}
+%files -n %{devname}
 %doc %{_datadir}/gtk-doc/html/%{name}
 %{_libdir}/libtotem.so
 %{_libdir}/pkgconfig/totem.pc
