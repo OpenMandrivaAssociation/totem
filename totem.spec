@@ -1,27 +1,29 @@
 %define build_mozilla 1
 
-%define api	1.0
-%define major	0
-%define libname	%mklibname %{name} %{major}
-%define girname	%mklibname %{name}-gir %{api}
-%define devname	%mklibname %{name} -d
+%define api		1.0
+%define major		0
+%define girmajor	1.0
+%define libname		%mklibname %{name} %{major}
+%define girname		%mklibname %{name}-gir %{girmajor}
+%define develname	%mklibname %{name} -d
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.4.3
+Version:	3.6.3
 Release:	1
-License:	GPLv2
+License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/3.6/%{name}-%{version}.tar.xz
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1:	totem-opendvd.desktop
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd45-xml
-BuildRequires:	gstreamer0.10-plugins-good
-BuildRequires:	gstreamer0.10-soup
-BuildRequires:	gstreamer0.10-tools
+BuildRequires:	gstreamer1.0-plugins-good
+BuildRequires:	gstreamer1.0-plugins-bad
+BuildRequires:	gstreamer1.0-soup
+BuildRequires:	gstreamer1.0-tools
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 #BuildRequires:	pylint
@@ -30,11 +32,12 @@ BuildRequires:	vala-devel
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(gnome-doc-utils)
-BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires:	pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
 BuildRequires:	pkgconfig(clutter-gst-1.0) >= 1.3.9
 BuildRequires:	pkgconfig(clutter-gtk-1.0)
-BuildRequires:	pkgconfig(grilo-0.1) >= 0.1.16
+BuildRequires:	pkgconfig(grilo-0.2) >= 0.2.0
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
 BuildRequires:	pkgconfig(libgdata) >= 0.4.0
@@ -46,31 +49,39 @@ BuildRequires:	pkgconfig(mx-1.0)
 BuildRequires:	pkgconfig(pygobject-3.0)
 BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	pkgconfig(sm)
+BuildRequires:	pkgconfig(gsettings-desktop-schemas)
+BuildRequires:	pkgconfig(gnome-icon-theme)
+BuildRequires:	pkgconfig(clutter-gst-2.0)
+BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
+BuildRequires:	gstreamer1.0-soundtouch
 %ifarch %{ix86} x86_64
 BuildRequires:	pkgconfig(nvtvsimple)
 %endif
 
-Requires: grilo-plugins
-Requires: iso-codes
-Requires: gstreamer0.10-plugins-base
-Requires: gstreamer0.10-plugins-good
-Requires: gstreamer0.10-soup
-Suggests: gstreamer0.10-resindvd
-Suggests: gstreamer0.10-a52dec
+Requires:	grilo-plugins
+Requires:	iso-codes
+Requires:	gstreamer1.0-plugins-base
+Requires:	gstreamer1.0-plugins-good
+Requires:	gstreamer1.0-soup
+Suggests:	gstreamer1.0-resindvd
+Suggests:	gstreamer1.0-a52dec
+# Must have plugins. Totem doesn't start without them
+Requires:	gstreamer1.0-gstclutter
+Requires:	gstreamer1.0-soundtouch 
 
 #gw opensubtitles plugin:
-Requires: pyxdg
+Requires:	pyxdg
 # python plugins
-Requires: python-dbus
-Requires: python-gi
+Requires:	python-dbus
+Requires:	python-gi
 
 #gw needed by the iplayer plugin
-Requires: python-httplib2
-Requires: python-feedparser
-Requires: python-beautifulsoup
+Requires:	python-httplib2
+Requires:	python-feedparser
+Requires:	python-beautifulsoup
 
-Obsoletes: %{name}-tracker
+Obsoletes:	%{name}-tracker < 3.4
 
 %description
 Totem is simple movie player for the GNOME desktop. It
@@ -78,20 +89,21 @@ features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
 
 %if %{build_mozilla}
-%package mozilla
+%package	mozilla
 Summary:	Totem video plugin for Mozilla Firefox
 Group:		Networking/WWW
-BuildRequires:	dbus-devel >= 0.35
+BuildRequires:	pkgconfig(dbus-1)
+Obsoletes:	totem-mozilla-gstreamer < %{version}-%{release}
+Provides:	totem-mozilla-gstreamer = %{version}-%{release}
 Requires:	%{name} = %{version}-%{release}
-%rename		totem-mozilla-gstreamer
 
 %description mozilla
 This embeds the Totem video player into web browsers based on Mozilla Firefox.
 %endif
 
 %package nautilus
-Summary:	Video and Audio Properties tab for Nautilus
 Group:		Video
+Summary:	Video and Audio Properties tab for Nautilus
 #gw just for the translations:
 Requires:	%{name} = %{version}-%{release}
 Requires:	nautilus
@@ -101,8 +113,8 @@ A Nautilus extension that shows the properties of audio and video
 files in the properties dialogue.
 
 %package -n %{libname}
-Summary:	Shared libraries for %{name}
 Group:		System/Libraries
+Summary:	Shared libraries for %{name}
 
 %description -n %{libname}
 This package contains the shared libraries for %{name}.
@@ -114,17 +126,17 @@ Group:		System/Libraries
 %description -n %{girname}
 GObject Introspection interface description for %{name}.
 
-%package -n %{devname}
+%package -n %{develname}
 Group:		Development/C
 Summary:	Devel files for %{name}
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %{devname}
+%description -n %{develname}
 Devel files for %{name}.
 
-%prep 
-%setup -q 
+%prep
+%setup -q
 %apply_patches
 
 %build
@@ -175,13 +187,14 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/grilo/*
 %{_libdir}/totem/plugins/gromit
 %{_libdir}/totem/plugins/im-status/*
-%{_libdir}/totem/plugins/iplayer
 %{_libdir}/totem/plugins/lirc
 %{_libdir}/totem/plugins/media-player-keys
 %{_libdir}/totem/plugins/ontop
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
-%{_libdir}/totem/plugins/publish
+%{_libdir}/totem/plugins/apple-trailers
+%{_libdir}/totem/plugins/autoload-subtitles
+%{_libdir}/totem/plugins/recent
 %{_libdir}/totem/plugins/pythonconsole
 %{_libdir}/totem/plugins/rotation
 %{_libdir}/totem/plugins/save-file/*
@@ -213,10 +226,9 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %files -n %{girname}
 %{_libdir}/girepository-1.0/Totem-1.0.typelib
 
-%files -n %{devname}
+%files -n %{develname}
 %doc %{_datadir}/gtk-doc/html/%{name}
 %{_libdir}/libtotem.so
 %{_libdir}/pkgconfig/totem.pc
 %{_includedir}/totem/%{api}/*
 %{_datadir}/gir-1.0/Totem-1.0.gir
-

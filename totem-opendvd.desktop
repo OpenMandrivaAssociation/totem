@@ -1,0 +1,24 @@
+[Desktop Entry]
+X-KDE-Solid-Predicate=[ StorageVolume.ignored == false AND OpticalDisc.availableContent == 'Data|VideoDvd' ]
+Type=Service
+Actions=open;
+
+[Desktop Action open]
+Name=Open with Video Player (Totem)
+Name[de]=Mit dem Video-Abspieler (Totem) öffnen
+Name[el]=Άνοιγμα με τον αναπαραγωγέα βίντεο (Totem)
+Name[en_GB]=Open with Video Player (Totem)
+Name[es]=Abrir con el reproductor de vídeo (Totem)
+Name[et]=Ava videomängijaga (Totem)
+Name[eu]=Ireki bideo jolearekin (Totem)
+Name[fr]=Ouvrir avec le lecteur vidéo (Totem)
+Name[nb]=Åpne med videoavspiller (Totem)
+Name[pt]=Abrir com o leitor de vídeo (Totem)
+Name[pt_BR]=Abrir com o leitor de vídeo (Totem)
+Name[ro]=Deschide cu lectorul video (Totem)
+Name[ru]=Открыть в видеоплеере (Totem)
+Name[tr]=Film Oynatıcı (Totem) ile aç
+Name[zh_CN]=用视频播放器(Totem)打开
+
+Exec=totem --play dvd://%f
+Icon=totem
