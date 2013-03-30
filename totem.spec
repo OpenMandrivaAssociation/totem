@@ -1,4 +1,5 @@
 %define build_mozilla 1
+%define _disable_ld_no_undefined 1
 
 %define api		1.0
 %define major		0
