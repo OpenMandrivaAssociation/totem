@@ -204,7 +204,7 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
 %{_libdir}/totem/plugins/zeitgeist-dp
-%{_libdir}/totem/totem-bugreport.py
+%{_libexecdir}/totem/totem-bugreport.py
 %{_datadir}/applications/totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
 %{_datadir}/GConf/gsettings/*.convert
