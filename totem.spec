@@ -37,6 +37,7 @@ BuildRequires:	pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
 BuildRequires:	pkgconfig(clutter-gst-2.0) >= 1.3.9
 BuildRequires:	pkgconfig(clutter-gtk-1.0)
+BuildRequires:	pkgconfig(gnome-desktop-3.0)
 BuildRequires:	pkgconfig(grilo-0.2) >= 0.2.0
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
