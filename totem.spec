@@ -1,4 +1,3 @@
-%define build_mozilla 1
 %define _disable_ld_no_undefined 1
 
 %define api		1.0
@@ -10,8 +9,8 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.6.3
-Release:	9
+Version:	3.14.0
+Release:	1
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
@@ -46,17 +45,16 @@ BuildRequires:	pkgconfig(liblircclient0)
 BuildRequires:	pkgconfig(libnautilus-extension) >= 2.91.3
 BuildRequires:	pkgconfig(libpeas-gtk-1.0) >= 0.7.2
 BuildRequires:	pkgconfig(libproxy-1.0)
-BuildRequires:	pkgconfig(mx-1.0)
 BuildRequires:	pkgconfig(pygobject-3.0)
 BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(gsettings-desktop-schemas)
-BuildRequires:	pkgconfig(gnome-icon-theme)
+BuildRequires:	pkgconfig(adwaita-icon-theme)
 BuildRequires:	pkgconfig(clutter-gst-2.0)
 BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
 BuildRequires:	gstreamer1.0-soundtouch
-BuildRequires:	pkgconfig(zeitgeist-1.0)
+BuildRequires:	pkgconfig(zeitgeist-2.0)
 %ifarch %{ix86} x86_64
 BuildRequires:	pkgconfig(nvtvsimple)
 %endif
@@ -89,19 +87,6 @@ Obsoletes:	%{name}-tracker < 3.4
 Totem is simple movie player for the GNOME desktop. It
 features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
-
-%if %{build_mozilla}
-%package	mozilla
-Summary:	Totem video plugin for Mozilla Firefox
-Group:		Networking/WWW
-BuildRequires:	pkgconfig(dbus-1)
-Obsoletes:	totem-mozilla-gstreamer < %{version}-%{release}
-Provides:	totem-mozilla-gstreamer = %{version}-%{release}
-Requires:	%{name} = %{version}-%{release}
-
-%description mozilla
-This embeds the Totem video player into web browsers based on Mozilla Firefox.
-%endif
 
 %package nautilus
 Group:		Video
@@ -142,17 +127,10 @@ Devel files for %{name}.
 %apply_patches
 
 %build
-%configure2_5x \
-	--disable-static \
+%configure \
+	--enable-compile-warnings=no \
 	--disable-run-in-source-tree \
-	--disable-vegas-plugin \
-	--enable-easy-codec-installation \
-%if %{build_mozilla}
-	--enable-browser-plugins \
-%else
-	--disable-browser-plugins \
-%endif
-
+	--enable-easy-codec-installation
 %make
 
 %install
@@ -180,13 +158,11 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_bindir}/totem-video-thumbnailer
 %dir %{_libdir}/totem
 %dir %{_libdir}/totem/plugins/
-%dir %{_libdir}/totem/plugins/grilo
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
 %{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/chapters
 %{_libdir}/totem/plugins/dbus
-%{_libdir}/totem/plugins/grilo/*
 %{_libdir}/totem/plugins/gromit
 %{_libdir}/totem/plugins/im-status/*
 %{_libdir}/totem/plugins/lirc
@@ -203,10 +179,13 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screensaver
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
+%{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/zeitgeist-dp
-%{_libdir}/totem/totem-bugreport.py
-%{_datadir}/applications/totem.desktop
+%{_libexecdir}/totem/totem-bugreport.py
+%{_datadir}/appdata/org.gnome.Totem.appdata.xml
+%{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
+%{_datadir}/dbus-1/services/org.gnome.Totem.service
 %{_datadir}/GConf/gsettings/*.convert
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/icons/hicolor/*/*/*
@@ -216,12 +195,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 
 %files nautilus
 %{_libdir}/nautilus/extensions-3.0/*
-
-%if %{build_mozilla}
-%files mozilla
-%{_libdir}/mozilla/plugins/libtotem*.so
-%{_libexecdir}/totem-plugin-viewer
-%endif
 
 %files -n %{libname}
 %{_libdir}/libtotem.so.%{major}*

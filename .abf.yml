@@ -1,3 +1,4 @@
----
-sources:
+removed_sources:
   totem-3.6.3.tar.xz: a494171797b90363957f5b591a47fa734cf802b2
+sources:
+  totem-3.14.0.tar.xz: d8f6e29bd3db446ac8d233380c5cf5d3c78ebdbe
