@@ -9,7 +9,7 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.14.0
+Version:	 3.16.0
 Release:	2
 License:	GPLv2 with exception
 Group:		Video
@@ -69,7 +69,7 @@ Suggests:	gstreamer1.0-resindvd
 Suggests:	gstreamer1.0-a52dec
 # Must have plugins. Totem doesn't start without them
 Requires:	gstreamer1.0-gstclutter
-Requires:	gstreamer1.0-soundtouch 
+Requires:	gstreamer1.0-soundtouch
 
 #gw opensubtitles plugin:
 Requires:	pyxdg
