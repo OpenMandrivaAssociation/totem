@@ -182,7 +182,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/skipto
 %{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/zeitgeist-dp
-%{_libexecdir}/totem/totem-bugreport.py
 %{_datadir}/appdata/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
