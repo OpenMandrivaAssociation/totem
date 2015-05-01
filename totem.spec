@@ -10,7 +10,7 @@
 Summary:	Movie player for GNOME
 Name:		totem
 Version:	3.16.0
-Release:	2
+Release:	3
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
@@ -55,7 +55,6 @@ BuildRequires:	pkgconfig(clutter-gst-2.0)
 BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
 BuildRequires:	gstreamer1.0-soundtouch
-BuildRequires:	pkgconfig(zeitgeist-2.0)
 %ifarch %{ix86} x86_64
 BuildRequires:	pkgconfig(nvtvsimple)
 %endif
@@ -181,7 +180,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
 %{_libdir}/totem/plugins/vimeo
-%{_libdir}/totem/plugins/zeitgeist-dp
 %{_datadir}/appdata/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
