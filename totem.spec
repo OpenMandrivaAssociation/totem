@@ -10,7 +10,7 @@
 Summary:	Movie player for GNOME
 Name:		totem
 Version:	3.16.0
-Release:	3
+Release:	4
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
