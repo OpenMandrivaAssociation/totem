@@ -1,4 +1,5 @@
 %define _disable_ld_no_undefined 1
+%define _disable_rebuild_configure 1
 
 %define api		1.0
 %define major		0
@@ -9,8 +10,8 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.16.0
-Release:	5
+Version:	3.18.1
+Release:	1
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
