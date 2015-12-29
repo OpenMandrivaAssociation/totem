@@ -162,7 +162,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
 %{_libdir}/totem/plugins/brasero-disc-recorder
-%{_libdir}/totem/plugins/chapters
 %{_libdir}/totem/plugins/dbus
 %{_libdir}/totem/plugins/gromit
 %{_libdir}/totem/plugins/im-status/*
