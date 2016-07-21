@@ -77,11 +77,6 @@ Requires:	pyxdg
 Requires:	python-dbus
 Requires:	python-gi
 
-#gw needed by the iplayer plugin
-Requires:	python-httplib2
-Requires:	python-feedparser
-Requires:	python-beautifulsoup
-
 Obsoletes:	%{name}-tracker < 3.4
 
 %description
