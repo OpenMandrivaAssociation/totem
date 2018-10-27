@@ -10,7 +10,7 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.18.1
+Version:	3.26.2
 Release:	1
 License:	GPLv2 with exception
 Group:		Video
@@ -19,27 +19,41 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/3.6/%{name}-%{version}.t
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1:	totem-opendvd.desktop
 
+BuildRequires:	intltool
+BuildRequires:	gnome-common
+BuildRequires:	pkgconfig(appstream-glib)
+BuildRequires:	shared-mime-info
+BuildRequires:	pylint
 BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd45-xml
+BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	gstreamer1.0-plugins-good
 BuildRequires:	gstreamer1.0-plugins-bad
+BuildRequires:	gstreamer1.0-soundtouch
 BuildRequires:	gstreamer1.0-soup
 BuildRequires:	gstreamer1.0-tools
+BuildRequires:	pkgconfig(gstreamer-audio-1.0)
+BuildRequires:	pkgconfig(gstreamer-base-1.0)
+BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
+BuildRequires:	pkgconfig(gstreamer-plugins-bad-1.0)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	itstool
 BuildRequires:	vala
 BuildRequires:	vala-devel
 BuildRequires:	pkgconfig(bluez)
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(gtk+-x11-3.0)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(gnome-doc-utils)
-BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
-BuildRequires:	pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
 BuildRequires:	pkgconfig(clutter-gst-3.0) >= 2.99.2
 BuildRequires:	pkgconfig(clutter-gtk-1.0)
 BuildRequires:	pkgconfig(gnome-desktop-3.0)
-BuildRequires:	pkgconfig(grilo-0.2) >= 0.2.0
+BuildRequires:	pkgconfig(grilo-0.3) >= 0.2.0
+BuildRequires:	pkgconfig(grilo-pls-0.3)
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
 BuildRequires:	pkgconfig(libgdata) >= 0.4.0
@@ -53,9 +67,15 @@ BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(gsettings-desktop-schemas)
 BuildRequires:	pkgconfig(adwaita-icon-theme)
 BuildRequires:	pkgconfig(clutter-gst-2.0)
-BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
-BuildRequires:	gstreamer1.0-soundtouch
+BuildRequires:	pkgconfig(pygobject-3.0)
+BuildRequires:	pkgconfig(zeitgeist-2.0)
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	meson
+BuildRequires:	libxml2-utils
+BuildRequires:	yelp-tools
+
 %ifarch %{ix86} x86_64
 BuildRequires:	pkgconfig(nvtvsimple)
 %endif
@@ -117,21 +137,16 @@ Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{develname}
 Devel files for %{name}.
-
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
-%configure \
-	--enable-compile-warnings=no \
-	--disable-run-in-source-tree \
-	--enable-easy-codec-installation
-%make
+%meson -Denable-gtk-doc=true
+%meson_build
 
 %install
-%makeinstall_std
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
+%meson_install
+
 %find_lang %{name} --with-gnome
 
 #menu
