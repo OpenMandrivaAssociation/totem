@@ -171,7 +171,7 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %files -f %{name}.lang
 %doc README AUTHORS TODO NEWS
 %{_bindir}/totem
-%{_bindir}/totem-audio-preview
+#{_bindir}/totem-audio-preview
 %{_bindir}/totem-video-thumbnailer
 %dir %{_libdir}/totem
 %dir %{_libdir}/totem/plugins/
@@ -196,7 +196,7 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
 %{_libdir}/totem/plugins/vimeo
-%{_datadir}/appdata/org.gnome.Totem.appdata.xml
+%{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
 %{_datadir}/dbus-1/services/org.gnome.Totem.service
