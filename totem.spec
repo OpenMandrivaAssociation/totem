@@ -1,3 +1,9 @@
+# Fix from Mageia (thanks guys!)
+# Upstream: https://bugzilla.gnome.org/show_bug.cgi?id=786248
+# (tv) fix // build randomly failling with: 
+# "error: Package `Totem-1.0' not found in specified Vala API directories or GObject-Introspection GIR directories"
+%global _smp_ncpus_max 4
+
 %define _disable_ld_no_undefined 1
 %define _disable_rebuild_configure 1
 
