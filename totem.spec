@@ -196,6 +196,9 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
 %{_libdir}/totem/plugins/vimeo
+%{_libdir}/totem/plugins/variable-rate/libvariable-rate.so
+%{_libdir}/totem/plugins/variable-rate/variable-rate.plugin
+%{_libdir}/totem/plugins/zeitgeist-dp*
 %{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
@@ -204,6 +207,7 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/thumbnailers/totem.thumbnailer
+%{_libexecdir}/totem-gallery-thumbnailer
 %{_datadir}/totem
 %{_mandir}/man1/*
 
