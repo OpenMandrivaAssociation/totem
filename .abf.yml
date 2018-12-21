@@ -1,7 +1,4 @@
-removed_sources:
-  totem-3.14.0.tar.xz: d8f6e29bd3db446ac8d233380c5cf5d3c78ebdbe
-  totem-3.16.0.tar.xz: 73a68aa80ba80504541f83b236f421d69ff1fdfb
-  totem-3.6.3.tar.xz: a494171797b90363957f5b591a47fa734cf802b2
 sources:
   totem-3.18.1.tar.xz: 133035cb0e185941b39d8857afdc45b409f41649
   totem-3.26.2.tar.xz: 25149fc34737f1f6b4ba3cd667acae2d861c0495
+  totem-3.30.0.tar.xz: bc859297d9fa368dad5b189925610d3d03b35de7
