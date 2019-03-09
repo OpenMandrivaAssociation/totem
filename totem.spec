@@ -16,8 +16,8 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.30.0
-Release:	2
+Version:	3.32.0
+Release:	1
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
@@ -64,7 +64,6 @@ BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
 BuildRequires:	pkgconfig(libgdata) >= 0.4.0
 BuildRequires:	pkgconfig(liblircclient0)
-BuildRequires:	pkgconfig(libnautilus-extension) >= 2.91.3
 BuildRequires:	pkgconfig(libpeas-gtk-1.0) >= 0.7.2
 BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(pygobject-3.0)
@@ -105,22 +104,12 @@ Requires:	python-dbus
 Requires:	python-gi
 
 Obsoletes:	%{name}-tracker < 3.4
+Obsoletes:      totem-nautilus < 3.30.0-2
 
 %description
 Totem is simple movie player for the GNOME desktop. It
 features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
-
-%package nautilus
-Group:		Video
-Summary:	Video and Audio Properties tab for Nautilus
-#gw just for the translations:
-Requires:	%{name} = %{version}-%{release}
-Requires:	nautilus
-
-%description nautilus
-A Nautilus extension that shows the properties of audio and video
-files in the properties dialogue.
 
 %package -n %{libname}
 Group:		System/Libraries
@@ -170,7 +159,7 @@ mkdir -p %{buildroot}/%{_datadir}/apps/solid/actions
 install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 
 %files -f %{name}.lang
-%doc README AUTHORS TODO NEWS
+%doc README AUTHORS NEWS
 %{_bindir}/totem
 #{_bindir}/totem-audio-preview
 %{_bindir}/totem-video-thumbnailer
@@ -180,11 +169,9 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %dir %{_libdir}/totem/plugins/save-file
 %{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/dbus
-%{_libdir}/totem/plugins/gromit
 %{_libdir}/totem/plugins/im-status/*
 %{_libdir}/totem/plugins/lirc
 %{_libdir}/totem/plugins/media-player-keys
-%{_libdir}/totem/plugins/ontop
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
 %{_libdir}/totem/plugins/apple-trailers
@@ -199,7 +186,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/variable-rate/libvariable-rate.so
 %{_libdir}/totem/plugins/variable-rate/variable-rate.plugin
-%{_libdir}/totem/plugins/zeitgeist-dp*
 %{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
@@ -211,9 +197,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libexecdir}/totem-gallery-thumbnailer
 %{_datadir}/totem
 %{_mandir}/man1/*
-
-%files nautilus
-%{_libdir}/nautilus/extensions-3.0/*
 
 %files -n %{libname}
 %{_libdir}/libtotem.so.%{major}*
