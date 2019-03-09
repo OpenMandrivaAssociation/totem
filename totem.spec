@@ -16,8 +16,8 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.30.0
-Release:	2
+Version:	3.32.0
+Release:	1
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
