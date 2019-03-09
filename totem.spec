@@ -64,7 +64,6 @@ BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
 BuildRequires:	pkgconfig(libgdata) >= 0.4.0
 BuildRequires:	pkgconfig(liblircclient0)
-BuildRequires:	pkgconfig(libnautilus-extension) >= 2.91.3
 BuildRequires:	pkgconfig(libpeas-gtk-1.0) >= 0.7.2
 BuildRequires:	pkgconfig(libproxy-1.0)
 BuildRequires:	pkgconfig(pygobject-3.0)
@@ -110,17 +109,6 @@ Obsoletes:	%{name}-tracker < 3.4
 Totem is simple movie player for the GNOME desktop. It
 features a simple playlist, a full-screen mode, seek and volume
 controls, as well as a pretty complete keyboard navigation.
-
-%package nautilus
-Group:		Video
-Summary:	Video and Audio Properties tab for Nautilus
-#gw just for the translations:
-Requires:	%{name} = %{version}-%{release}
-Requires:	nautilus
-
-%description nautilus
-A Nautilus extension that shows the properties of audio and video
-files in the properties dialogue.
 
 %package -n %{libname}
 Group:		System/Libraries
@@ -208,9 +196,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libexecdir}/totem-gallery-thumbnailer
 %{_datadir}/totem
 %{_mandir}/man1/*
-
-%files nautilus
-%{_libdir}/nautilus/extensions-3.0/*
 
 %files -n %{libname}
 %{_libdir}/libtotem.so.%{major}*
