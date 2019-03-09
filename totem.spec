@@ -104,6 +104,7 @@ Requires:	python-dbus
 Requires:	python-gi
 
 Obsoletes:	%{name}-tracker < 3.4
+Obsoletes:      totem-nautilus < 3.30.0-2
 
 %description
 Totem is simple movie player for the GNOME desktop. It
