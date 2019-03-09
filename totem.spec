@@ -170,7 +170,7 @@ mkdir -p %{buildroot}/%{_datadir}/apps/solid/actions
 install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 
 %files -f %{name}.lang
-%doc README AUTHORS TODO NEWS
+%doc README AUTHORS NEWS
 %{_bindir}/totem
 #{_bindir}/totem-audio-preview
 %{_bindir}/totem-video-thumbnailer
@@ -180,11 +180,9 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %dir %{_libdir}/totem/plugins/save-file
 %{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/dbus
-%{_libdir}/totem/plugins/gromit
 %{_libdir}/totem/plugins/im-status/*
 %{_libdir}/totem/plugins/lirc
 %{_libdir}/totem/plugins/media-player-keys
-%{_libdir}/totem/plugins/ontop
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
 %{_libdir}/totem/plugins/apple-trailers
@@ -199,7 +197,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/variable-rate/libvariable-rate.so
 %{_libdir}/totem/plugins/variable-rate/variable-rate.plugin
-%{_libdir}/totem/plugins/zeitgeist-dp*
 %{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
