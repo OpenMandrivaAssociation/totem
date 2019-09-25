@@ -168,10 +168,10 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %dir %{_libdir}/totem/plugins/
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
-%{_libdir}/totem/plugins/brasero-disc-recorder
+#{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/dbus
 %{_libdir}/totem/plugins/im-status/*
-%{_libdir}/totem/plugins/lirc
+#{_libdir}/totem/plugins/lirc
 %{_libdir}/totem/plugins/media-player-keys
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
