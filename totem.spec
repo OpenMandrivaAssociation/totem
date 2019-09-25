@@ -16,7 +16,7 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.32.1
+Version:	3.34.0
 Release:	1
 License:	GPLv2 with exception
 Group:		Video
@@ -54,6 +54,7 @@ BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(gtk+-x11-3.0)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(gnome-doc-utils)
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
 BuildRequires:	pkgconfig(clutter-gst-3.0) >= 2.99.2
 BuildRequires:	pkgconfig(clutter-gtk-1.0)
@@ -167,10 +168,10 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %dir %{_libdir}/totem/plugins/
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
-%{_libdir}/totem/plugins/brasero-disc-recorder
+#{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/dbus
 %{_libdir}/totem/plugins/im-status/*
-%{_libdir}/totem/plugins/lirc
+#{_libdir}/totem/plugins/lirc
 %{_libdir}/totem/plugins/media-player-keys
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
@@ -186,6 +187,8 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/variable-rate/libvariable-rate.so
 %{_libdir}/totem/plugins/variable-rate/variable-rate.plugin
+%{_libdir}/totem/plugins/open-directory/libopen-directory.so
+%{_libdir}/totem/plugins/open-directory/open-directory.plugin
 %{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
