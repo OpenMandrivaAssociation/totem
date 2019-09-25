@@ -16,7 +16,7 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.32.1
+Version:	3.34.0
 Release:	1
 License:	GPLv2 with exception
 Group:		Video
@@ -54,6 +54,7 @@ BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(gtk+-x11-3.0)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(gnome-doc-utils)
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
 BuildRequires:	pkgconfig(clutter-gst-3.0) >= 2.99.2
 BuildRequires:	pkgconfig(clutter-gtk-1.0)
