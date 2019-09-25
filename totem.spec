@@ -187,6 +187,8 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/variable-rate/libvariable-rate.so
 %{_libdir}/totem/plugins/variable-rate/variable-rate.plugin
+%{_libdir}/totem/plugins/open-directory/libopen-directory.so
+%{_libdir}/totem/plugins/open-directory/open-directory.plugin
 %{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/org.gnome.Totem.desktop
 %{_datadir}/apps/solid/actions/totem-opendvd.desktop
