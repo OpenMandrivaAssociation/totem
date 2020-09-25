@@ -1,3 +1,5 @@
+%define url_ver %(echo %{version} | cut -d "." -f -2)
+
 # Fix from Mageia (thanks guys!)
 # Upstream: https://bugzilla.gnome.org/show_bug.cgi?id=786248
 # (tv) fix // build randomly failling with: 
@@ -16,12 +18,12 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.34.1
-Release:	4
+Version:	3.38.0
+Release:	1
 License:	GPLv2 with exception
 Group:		Video
 URL:		http://projects.gnome.org/totem/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/3.6/%{name}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{url_ver}/%{name}-%{version}.tar.xz
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1:	totem-opendvd.desktop
 
@@ -73,7 +75,7 @@ BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(gsettings-desktop-schemas)
 BuildRequires:	pkgconfig(adwaita-icon-theme)
 BuildRequires:	pkgconfig(clutter-gst-2.0)
-BuildRequires:	pkgconfig(totem-plparser) >= 2.32.4
+BuildRequires:	pkgconfig(totem-plparser)
 BuildRequires:	pkgconfig(pygobject-3.0)
 BuildRequires:	pkgconfig(zeitgeist-2.0)
 BuildRequires:	pkgconfig(x11)
