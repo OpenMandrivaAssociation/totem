@@ -164,15 +164,14 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
 %{_bindir}/totem
-#{_bindir}/totem-audio-preview
 %{_bindir}/totem-video-thumbnailer
 %dir %{_libdir}/totem
 %dir %{_libdir}/totem/plugins/
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
-#{_libdir}/totem/plugins/brasero-disc-recorder
 %{_libdir}/totem/plugins/im-status/*
-#{_libdir}/totem/plugins/lirc
+%{_libdir}/totem/plugins/mpris/libmpris.so
+%{_libdir}/totem/plugins/mpris/mpris.plugin
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
 %{_libdir}/totem/plugins/apple-trailers
