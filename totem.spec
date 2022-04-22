@@ -1,8 +1,7 @@
 %define url_ver %(echo %{version} | cut -d "." -f -2)
 
-# Fix from Mageia (thanks guys!)
 # Upstream: https://bugzilla.gnome.org/show_bug.cgi?id=786248
-# (tv) fix // build randomly failling with: 
+# build randomly failling with: 
 # "error: Package `Totem-1.0' not found in specified Vala API directories or GObject-Introspection GIR directories"
 %global _smp_ncpus_max 4
 
@@ -18,7 +17,7 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	3.38.2
+Version:	42.0
 Release:	1
 License:	GPLv2 with exception
 Group:		Video
@@ -64,6 +63,7 @@ BuildRequires:	pkgconfig(gnome-desktop-3.0)
 BuildRequires:	pkgconfig(grilo-0.3) >= 0.2.0
 BuildRequires:	pkgconfig(grilo-pls-0.3)
 BuildRequires:	pkgconfig(ice)
+BuildRequires:	pkgconfig(libhandy-1)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
 BuildRequires:	pkgconfig(libgdata) >= 0.4.0
 BuildRequires:	pkgconfig(liblircclient0)
@@ -164,17 +164,14 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %files -f %{name}.lang
 %doc README AUTHORS NEWS
 %{_bindir}/totem
-#{_bindir}/totem-audio-preview
 %{_bindir}/totem-video-thumbnailer
 %dir %{_libdir}/totem
 %dir %{_libdir}/totem/plugins/
 %dir %{_libdir}/totem/plugins/im-status
 %dir %{_libdir}/totem/plugins/save-file
-#{_libdir}/totem/plugins/brasero-disc-recorder
-%{_libdir}/totem/plugins/dbus
 %{_libdir}/totem/plugins/im-status/*
-#{_libdir}/totem/plugins/lirc
-%{_libdir}/totem/plugins/media-player-keys
+%{_libdir}/totem/plugins/mpris/libmpris.so
+%{_libdir}/totem/plugins/mpris/mpris.plugin
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
 %{_libdir}/totem/plugins/apple-trailers
