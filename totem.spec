@@ -198,7 +198,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/thumbnailers/totem.thumbnailer
 %{_libexecdir}/totem-gallery-thumbnailer
-%{_datadir}/totem
 %{_mandir}/man1/*
 
 %files -n %{libname}
