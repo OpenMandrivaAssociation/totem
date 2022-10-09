@@ -64,6 +64,7 @@ BuildRequires:	pkgconfig(grilo-0.3) >= 0.2.0
 BuildRequires:	pkgconfig(grilo-pls-0.3)
 BuildRequires:	pkgconfig(ice)
 BuildRequires:	pkgconfig(libhandy-1)
+BuildRequires:	pkgconfig(libportal-gtk3)
 BuildRequires:	pkgconfig(libepc-ui-1.0) > 0.4.0
 BuildRequires:	pkgconfig(libgdata) >= 0.4.0
 BuildRequires:	pkgconfig(liblircclient0)
