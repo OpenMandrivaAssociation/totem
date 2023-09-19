@@ -18,11 +18,11 @@
 Summary:	Movie player for GNOME
 Name:		totem
 Version:	43.0
-Release:	3
+Release:	4
 License:	GPLv2 with exception
 Group:		Video
-URL:		http://projects.gnome.org/totem/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{url_ver}/%{name}-%{version}.tar.xz
+URL:		https://projects.gnome.org/totem/
+Source0:	https://ftp.gnome.org/pub/GNOME/sources/%{name}/%{url_ver}/%{name}-%{version}.tar.xz
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1:	totem-opendvd.desktop
 
