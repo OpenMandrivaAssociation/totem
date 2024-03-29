@@ -30,7 +30,7 @@ BuildRequires:	intltool
 BuildRequires:	gnome-common
 BuildRequires:	pkgconfig(appstream-glib)
 BuildRequires:	shared-mime-info
-BuildRequires:	python-pylint
+#BuildRequires:	python-pylint
 BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd45-xml
 BuildRequires:	pkgconfig(gstreamer-1.0)
