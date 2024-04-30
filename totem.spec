@@ -44,6 +44,7 @@ BuildRequires:	pkgconfig(gstreamer-base-1.0)
 BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires:	gstreamer1.0-gtk
 BuildRequires:	gnome-common
 BuildRequires:	intltool
 BuildRequires:	itstool
