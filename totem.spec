@@ -17,18 +17,14 @@
 
 Summary:	Movie player for GNOME
 Name:		totem
-Version:	43.0
-Release:	6
+Version:	43.1
+Release:	1
 License:	GPLv2 with exception
 Group:		Video
 URL:		https://projects.gnome.org/totem/
 Source0:	https://ftp.gnome.org/pub/GNOME/sources/%{name}/%{url_ver}/%{name}-%{version}.tar.xz
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1:	totem-opendvd.desktop
-# Force using newer GStreamer libva plugins instead gst-vaapi
-Patch0:         https://gitlab.gnome.org/GNOME/totem/-/commit/ac2d02530d3b555e44907162be05536a5927b2a0.patch
-# Add new canonical mime-type for AVI files
-Patch1:         https://gitlab.gnome.org/GNOME/totem/-/commit/d16d9ad1d2b214996639e4f01c4515b611fb2739.patch
 
 BuildRequires:	intltool
 BuildRequires:	gnome-common
