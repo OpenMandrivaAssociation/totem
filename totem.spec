@@ -177,7 +177,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/mpris/mpris.plugin
 %{_libdir}/totem/plugins/opensubtitles
 %{_libdir}/totem/plugins/properties
-%{_libdir}/totem/plugins/apple-trailers
 %{_libdir}/totem/plugins/autoload-subtitles
 %{_libdir}/totem/plugins/recent
 %{_libdir}/totem/plugins/pythonconsole
@@ -186,7 +185,6 @@ install -D -m 644 %{SOURCE1} %{buildroot}%{_datadir}/apps/solid/actions/
 %{_libdir}/totem/plugins/screensaver
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/skipto
-%{_libdir}/totem/plugins/vimeo
 %{_libdir}/totem/plugins/variable-rate/libvariable-rate.so
 %{_libdir}/totem/plugins/variable-rate/variable-rate.plugin
 %{_libdir}/totem/plugins/open-directory/libopen-directory.so
