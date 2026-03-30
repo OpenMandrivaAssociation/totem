@@ -25,6 +25,9 @@ URL:		https://projects.gnome.org/totem/
 Source0:	https://ftp.gnome.org/pub/GNOME/sources/%{name}/%{url_ver}/%{name}-%{version}.tar.xz
 #(nl) KDE Solid integration : from mdv svn  soft/mandriva-kde-translation/trunk/solid/
 Source1:	totem-opendvd.desktop
+# For PyGObject 3.52 transition. Drop after update to totem 44 or higher.
+	
+Patch0:         girepository-2.0.patch
 
 BuildRequires:	intltool
 BuildRequires:	gnome-common
@@ -56,7 +59,6 @@ BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(gtk+-x11-3.0)
 BuildRequires:	pkgconfig(gtk-doc)
 BuildRequires:	pkgconfig(gnome-doc-utils)
-BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(clutter-1.0) >= 1.6.8
 BuildRequires:	pkgconfig(clutter-gst-3.0) >= 2.99.2
 BuildRequires:	pkgconfig(clutter-gtk-1.0)
