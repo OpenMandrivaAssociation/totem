@@ -18,7 +18,7 @@
 Summary:	Movie player for GNOME
 Name:		totem
 Version:	43.2
-Release:	2
+Release:	3
 License:	GPLv2 with exception
 Group:		Video
 URL:		https://projects.gnome.org/totem/
@@ -83,7 +83,7 @@ BuildRequires:	pkgconfig(zeitgeist-2.0)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	meson
-BuildRequires:	libxml2-utils
+BuildRequires:	libxml2-utils >= 2.15.2
 BuildRequires:	yelp-tools
 
 %ifarch %{ix86} x86_64
